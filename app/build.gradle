@@ -1,0 +1,113 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.kl3jvi.gitflame"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    def navigationComponentVersion = "2.3.5"
+    implementation "androidx.navigation:navigation-runtime-ktx:$navigationComponentVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
+
+    def androidCoreVersion = "1.7.0"
+    implementation "androidx.core:core-ktx:$androidCoreVersion"
+
+    def appCompatVersion = "1.4.0"
+    def materialVersion = "1.4.0"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "com.google.android.material:material:$materialVersion"
+
+    def constraintLayoutVersion = "2.1.2"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    def livedataVersion = "2.4.0"
+    def viewModelVersion = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$livedataVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion"
+
+    def fragmentVersion = "1.4.0"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+    // by viewModels() delegate provider
+
+    def lifecycle_version = "2.4.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
+    // Coroutines
+    def coroutinesVersion = "1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+
+
+    // Retrofit
+    def retrofitVersion = "2.9.0"
+    def interceptor_version = "5.0.0-alpha.2"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+    // Moshi
+    def moshiVersion = "1.12.0"
+    def moshiAnnotationProcessor = "1.11.0"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiAnnotationProcessor")
+
+    // Hilt DI
+    def hiltVersion = "2.40.5"
+    def hiltAnnotationProcessor = "2.38.1"
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltAnnotationProcessor"
+
+    // Room
+    def roomVersion = '2.3.0'
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
+
+    // Glide
+    def glideVersion = "4.12.0"
+    def glidePaletteVersion = "2.1.2"
+    def glideAnnotationProcessor = "4.12.0"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.florent37:glidepalette:$glidePaletteVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideAnnotationProcessor"
+
+    //Splashscreen
+    def splashScreenVersion = "1.0.0-alpha02"
+    implementation "androidx.core:core-splashscreen:$splashScreenVersion"
+}
