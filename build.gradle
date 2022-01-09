@@ -7,9 +7,13 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.4"
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
+        //google services
+        def googleServices_version = "4.3.10"
+        classpath "com.google.gms:google-services:$googleServices_version"
         // Hilt
         def dagger_hilt_version = "2.40"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$dagger_hilt_version"
+        //safe args navigation
         def nav_version = "2.3.3"
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }

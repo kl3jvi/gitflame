@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "142517686742",
+    "project_id": "gitflame-335bb",
+    "storage_bucket": "gitflame-335bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142517686742:android:118b1868605082e9c39477",
+        "android_client_info": {
+          "package_name": "com.kl3jvi.gitflame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142517686742-8qts6qee6uk877kr60prmq2b5kri3gfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBT0vt1H-WAtFv6at98RUSWcUYfklGqk-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142517686742-8qts6qee6uk877kr60prmq2b5kri3gfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
