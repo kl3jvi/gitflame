@@ -1,5 +1,5 @@
 
-![Logo](/assets/feature_graphic.png?raw=true "Logo")
+![Logo](/assets/GitFLame.png?raw=true "Logo")
 
 # GitFlame  
 
