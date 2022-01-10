@@ -10,6 +10,7 @@ import androidx.browser.customtabs.CustomTabColorSchemeParams
 
 import android.graphics.Color
 import androidx.core.app.ShareCompat
+import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.common.Constants.OAUTH_URL
 
 
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val clientId = BuildConfig.GIT_ID
         binding.button.setOnClickListener {
             CustomTabsIntent.Builder()
                 .build()

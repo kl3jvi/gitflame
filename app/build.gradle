@@ -6,6 +6,7 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
     id 'com.google.gms.google-services'
+    id 'com.google.secrets_gradle_plugin' version("0.4")
 }
 
 android {
@@ -17,7 +18,6 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
