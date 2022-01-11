@@ -14,7 +14,7 @@ import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity(), AuthUtils {
+class LoginActivity : AppCompatActivity(), Authentication {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var customTabsIntent: CustomTabsIntent
@@ -60,7 +60,8 @@ class LoginActivity : AppCompatActivity(), AuthUtils {
             if (uri.toString().startsWith(BuildConfig.REDIRECT_URI)) {
                 val tokenCode = uri?.getQueryParameter("code")
                 if (!tokenCode.isNullOrEmpty()) {
-                    //todo create rest call for this
+                    println("$tokenCode")
+                    // todo <-> create rest call for this
                     viewModel.getAccessToken().observe(this) {}
                 } else {
                     // show error couldn't login
@@ -71,9 +72,9 @@ class LoginActivity : AppCompatActivity(), AuthUtils {
     }
 
 
-    override fun onTokenResponse(modelResponse: AccessTokenModel?) {
-        if (modelResponse != null) {
-            val token: String? = modelResponse.token ?: modelResponse.accessToken
+    override fun onTokenResponse(response: AccessTokenModel?) {
+        if (response != null) {
+            val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {
 //                PrefGetter.setToken(token)  todo save token on preferences
 //                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
