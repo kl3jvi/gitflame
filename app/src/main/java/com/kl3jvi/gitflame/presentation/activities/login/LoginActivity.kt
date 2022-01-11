@@ -103,6 +103,24 @@ class LoginActivity : AppCompatActivity(), Authentication {
     }
 
 
+//    override fun onTokenResponse(modelResponse: AccessTokenModel?) {
+//        if (modelResponse != null) {
+//            val token: String =
+//                if (modelResponse.getToken() != null) modelResponse.getToken() else modelResponse.getAccessToken()
+//            if (!InputHelper.isEmpty(token)) {
+//                PrefGetter.setToken(token)
+//                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
+//                    this.onUserResponse(
+//                        userModel
+//                    )
+//                }
+//                return
+//            }
+//        }
+//        sendToView { view -> view.showMessage(R.string.error, R.string.failed_login) }
+//    }
+
+
     override fun onTokenResponse(response: AccessTokenModel?) {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken

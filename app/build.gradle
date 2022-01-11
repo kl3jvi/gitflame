@@ -103,6 +103,10 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 
+    // DataStore
+    def dataStore_version = "1.0.0"
+    implementation "androidx.datastore:datastore-preferences:$dataStore_version"
+
     // Glide
     def coilVersion = "1.4.0"
     implementation "io.coil-kt:coil:$coilVersion"

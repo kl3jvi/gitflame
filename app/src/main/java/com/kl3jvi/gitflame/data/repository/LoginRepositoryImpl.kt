@@ -12,7 +12,7 @@ import javax.inject.Inject
 class LoginRepositoryImpl @Inject constructor(
     private val loginService: LoginService
 ) : LoginRepository {
-    override suspend fun getAccessToken(
+    override fun getAccessToken(
         code: String,
         clientId: String,
         clientSecret: String,
