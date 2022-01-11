@@ -1,6 +1,7 @@
 package com.kl3jvi.gitflame.data.network
 
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Headers
@@ -17,5 +18,5 @@ interface LoginService {
         @Field("client_secret") clientSecret: String,
         @Field("state") state: String,
         @Field("redirect_uri") redirectUrl: String
-    ): AccessTokenModel
+    ): Response<AccessTokenModel>
 }

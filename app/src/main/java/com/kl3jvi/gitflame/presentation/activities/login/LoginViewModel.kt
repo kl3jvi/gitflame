@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor() : ViewModel() {
-    fun getAccessToken() = liveData<String> { "test" }
+    fun getAccessToken(tokenCode:String) = liveData<String> { "test" }
 }
