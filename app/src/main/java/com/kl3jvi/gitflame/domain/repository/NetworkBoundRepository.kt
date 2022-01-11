@@ -9,19 +9,15 @@ import retrofit2.Response
 abstract class NetworkBoundRepository<RESULT> {
     fun asFlow() = flow<Resource<RESULT>> {
 
-        // Emit loading state first before making network call
-        emit(Resource.Loading<RESULT>())
-
         // Fetch remote content and parse body
         val response = fetchFromRemote()
         val body = response.body()
 
         if (!response.isSuccessful && body == null)
-            emit(Resource.Failed(response.message()))
+            emit(Resource.Failed<RESULT>(response.message()))
         else if (body != null) emit(
             Resource.Success<RESULT>(body)
         )
-
     }.catch { e ->
         e.printStackTrace()
         emit(Resource.Failed("Network Error Happened!"))

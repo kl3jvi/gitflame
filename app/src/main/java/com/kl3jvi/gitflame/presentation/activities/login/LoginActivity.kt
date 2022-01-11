@@ -8,10 +8,20 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.lifecycleScope
 import com.kl3jvi.gitflame.BuildConfig
+import com.kl3jvi.gitflame.common.Constants.APPLICATION_ID
+import com.kl3jvi.gitflame.common.Constants.CLIENT_ID
+import com.kl3jvi.gitflame.common.Constants.CLIENT_SECRET
+import com.kl3jvi.gitflame.common.Constants.REDIRECT_URL
+import com.kl3jvi.gitflame.common.NetworkUtil
+import com.kl3jvi.gitflame.common.State
+import com.kl3jvi.gitflame.common.ViewUtils.showToast
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : AppCompatActivity(), Authentication {
@@ -61,13 +71,34 @@ class LoginActivity : AppCompatActivity(), Authentication {
                 val tokenCode = uri?.getQueryParameter("code")
                 if (!tokenCode.isNullOrEmpty()) {
                     println("$tokenCode")
-                    // todo <-> create rest call for this
-                    viewModel.getAccessToken().observe(this) {}
+                    lifecycleScope.launch {
+                        viewModel.getAccessToken(
+                            tokenCode,
+                            CLIENT_ID,
+                            CLIENT_SECRET,
+                            APPLICATION_ID,
+                            REDIRECT_URL
+                        ).collect { state ->
+                            when (state) {
+                                is State.Error -> {}
+                                is State.Loading -> {}
+                                is State.Success -> {
+
+                                }
+                            }
+                        }
+                    }
                 } else {
                     // show error couldn't login
                     Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun handleNetworkChanges() {
+        NetworkUtil.getNetworkLiveData(applicationContext).observe(this) { isConnected ->
+            if (!isConnected) showToast("No Connection")
         }
     }
 

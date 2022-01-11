@@ -5,7 +5,7 @@ import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository {
-    suspend fun getAccessToken(
+    fun getAccessToken(
         code: String,
         clientId: String,
         clientSecret: String,
