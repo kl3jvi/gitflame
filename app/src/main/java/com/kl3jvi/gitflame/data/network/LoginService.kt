@@ -1,17 +1,15 @@
 package com.kl3jvi.gitflame.data.network
 
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
+import com.kl3jvi.gitflame.data.model.UserModel
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface LoginService {
 
-//    @GET("user")
-//    fun loginAccessToken(): Observable<Login?>?
-//
+    @GET("user")
+    fun loginAccessToken(): Response<UserModel>
+
 //    @POST("authorizations")
 //    fun login(@Body authModel: AuthModel): Observable<AccessTokenModel?>?
 

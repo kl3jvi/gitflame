@@ -4,8 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
@@ -88,9 +86,13 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                             REDIRECT_URL
                         ).collect { state ->
                             when (state) {
-                                is State.Error -> { showSnack(binding.root, state.message) }
+                                is State.Error -> {
+                                    showSnack(binding.root, state.message)
+                                }
                                 is State.Loading -> {}
-                                is State.Success -> {onTokenResponse(state.data) }
+                                is State.Success -> {
+                                    onTokenResponse(state.data)
+                                }
                             }
                         }
                     }
@@ -114,10 +116,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {
-                Log.e("Token saved",token)
+                Log.e("Token saved", token)
                 viewModel.saveTokenToDataStore(token)
-                viewModel
-//                PrefGetter.setToken(token)  todo save token on preferences
+                lifecycleScope.launch {
+                    viewModel.getUser().collect { state ->
+                        when (state) {
+                            is State.Error -> {}
+                            is State.Loading -> {}
+                            is State.Success -> {
+                                Log.e("Data", state.data.toString())
+                            }
+                        }
+                    }
+                }
 //                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
 //                    this.onUserResponse(
 //                        userModel

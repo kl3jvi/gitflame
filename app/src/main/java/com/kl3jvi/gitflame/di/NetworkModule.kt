@@ -2,6 +2,7 @@ package com.kl3jvi.gitflame.di
 
 import com.kl3jvi.gitflame.common.Constants.BASE_URL
 import com.kl3jvi.gitflame.data.network.LoginService
+import com.kl3jvi.gitflame.data.network.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +39,10 @@ object NetworkModule {
         return retrofit.create(LoginService::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideUserService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
+    }
 
 }
