@@ -3,6 +3,7 @@ package com.kl3jvi.gitflame.presentation.activities.login
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -83,7 +84,7 @@ class LoginActivity : AppCompatActivity(), Authentication {
                                 is State.Error -> {}
                                 is State.Loading -> {}
                                 is State.Success -> {
-
+                                    Log.e("Success",state.data.token?:"")
                                 }
                             }
                         }
@@ -125,7 +126,8 @@ class LoginActivity : AppCompatActivity(), Authentication {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {
-
+                viewModel.saveTokenToDataStore(token)
+                viewModel
 //                PrefGetter.setToken(token)  todo save token on preferences
 //                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
 //                    this.onUserResponse(
@@ -135,7 +137,7 @@ class LoginActivity : AppCompatActivity(), Authentication {
                 return
             }
         }
-        Toast.makeText(this, "Couldn't Login!!", Toast.LENGTH_SHORT).show()
+        showToast("Couldn't Login!!")
     }
 
 

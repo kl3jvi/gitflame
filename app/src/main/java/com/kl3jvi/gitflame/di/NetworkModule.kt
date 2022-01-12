@@ -1,6 +1,6 @@
 package com.kl3jvi.gitflame.di
 
-import com.kl3jvi.gitflame.common.Constants.BASE_LOGIN_URL
+import com.kl3jvi.gitflame.common.Constants.BASE_URL
 import com.kl3jvi.gitflame.data.network.LoginService
 import dagger.Module
 import dagger.Provides
@@ -18,14 +18,14 @@ object NetworkModule {
     @Singleton
     fun provideLoginRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_LOGIN_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
             .build()
     }
 
 //    @Provides
 //    @Singleton
-//    fun provideTestRetrofit(): Retrofit {
+//    fun provideUserDataRetrofit(): Retrofit {
 //        return Retrofit.Builder()
 //            .baseUrl(BASE_LOGIN_URL)
 //            .addConverterFactory(MoshiConverterFactory.create())
