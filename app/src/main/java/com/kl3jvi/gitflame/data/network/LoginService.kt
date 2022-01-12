@@ -15,7 +15,7 @@ interface LoginService {
 //    @POST("authorizations")
 //    fun login(@Body authModel: AuthModel): Observable<AccessTokenModel?>?
 
-    @POST("access_token")
+    @POST("login/oauth/access_token")
     @Headers("Accept: application/json")
     @FormUrlEncoded
     suspend fun getAccessToken(

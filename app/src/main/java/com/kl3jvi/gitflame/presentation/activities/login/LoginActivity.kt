@@ -79,7 +79,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             if (uri.toString().startsWith(BuildConfig.REDIRECT_URI)) {
                 val tokenCode = uri?.getQueryParameter("code")
                 if (!tokenCode.isNullOrEmpty()) {
-                    println("$tokenCode")
                     lifecycleScope.launch {
                         viewModel.getAccessToken(
                             tokenCode,
@@ -89,13 +88,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                             REDIRECT_URL
                         ).collect { state ->
                             when (state) {
-                                is State.Error -> {
-                                    showSnack(binding.root, state.message)
-                                }
+                                is State.Error -> { showSnack(binding.root, state.message) }
                                 is State.Loading -> {}
-                                is State.Success -> {
-                                    Log.e("Success", state.data.token ?: "")
-                                }
+                                is State.Success -> {onTokenResponse(state.data) }
                             }
                         }
                     }
@@ -115,28 +110,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
 
-//    override fun onTokenResponse(modelResponse: AccessTokenModel?) {
-//        if (modelResponse != null) {
-//            val token: String =
-//                if (modelResponse.getToken() != null) modelResponse.getToken() else modelResponse.getAccessToken()
-//            if (!InputHelper.isEmpty(token)) {
-//                PrefGetter.setToken(token)
-//                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
-//                    this.onUserResponse(
-//                        userModel
-//                    )
-//                }
-//                return
-//            }
-//        }
-//        sendToView { view -> view.showMessage(R.string.error, R.string.failed_login) }
-//    }
-
-
     override fun onTokenResponse(response: AccessTokenModel?) {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {
+                Log.e("Token saved",token)
                 viewModel.saveTokenToDataStore(token)
                 viewModel
 //                PrefGetter.setToken(token)  todo save token on preferences

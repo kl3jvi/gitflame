@@ -85,6 +85,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$interceptor_version"
+
     // Moshi
     def moshiVersion = "1.12.0"
     def moshiAnnotationProcessor = "1.11.0"
@@ -117,4 +118,7 @@ dependencies {
 
     def inAppBrowserVersion = "1.4.0"
     implementation "androidx.browser:browser:$inAppBrowserVersion"
+
+    def transformationLayoutVersion = "1.1.1"
+    implementation "com.github.skydoves:transformationlayout:$transformationLayoutVersion"
 }
