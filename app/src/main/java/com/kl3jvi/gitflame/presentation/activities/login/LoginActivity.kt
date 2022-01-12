@@ -4,47 +4,55 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.kl3jvi.gitflame.BuildConfig
+import com.kl3jvi.gitflame.R
 import com.kl3jvi.gitflame.common.Constants.APPLICATION_ID
 import com.kl3jvi.gitflame.common.Constants.CLIENT_ID
 import com.kl3jvi.gitflame.common.Constants.CLIENT_SECRET
 import com.kl3jvi.gitflame.common.Constants.REDIRECT_URL
 import com.kl3jvi.gitflame.common.NetworkUtil
 import com.kl3jvi.gitflame.common.State
+import com.kl3jvi.gitflame.common.ViewUtils.showSnack
 import com.kl3jvi.gitflame.common.ViewUtils.showToast
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
+import com.kl3jvi.gitflame.presentation.base.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginActivity : AppCompatActivity(), Authentication {
+class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login), Authentication {
 
-    private lateinit var binding: ActivityLoginBinding
     private lateinit var customTabsIntent: CustomTabsIntent
     private val viewModel: LoginViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.button.setOnClickListener {
-            customTabsIntent = CustomTabsIntent.Builder().build()
-            customTabsIntent.launchUrl(this, getAuthorizationUrl())
+        binding {
+            button.setOnClickListener {
+                customTabsIntent = CustomTabsIntent.Builder().build()
+                customTabsIntent.launchUrl(this@LoginActivity, getAuthorizationUrl())
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
         onHandleAuthIntent(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        handleNetworkChanges()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -81,10 +89,12 @@ class LoginActivity : AppCompatActivity(), Authentication {
                             REDIRECT_URL
                         ).collect { state ->
                             when (state) {
-                                is State.Error -> {}
+                                is State.Error -> {
+                                    showSnack(binding.root, state.message)
+                                }
                                 is State.Loading -> {}
                                 is State.Success -> {
-                                    Log.e("Success",state.data.token?:"")
+                                    Log.e("Success", state.data.token ?: "")
                                 }
                             }
                         }
@@ -99,7 +109,8 @@ class LoginActivity : AppCompatActivity(), Authentication {
 
     private fun handleNetworkChanges() {
         NetworkUtil.getNetworkLiveData(applicationContext).observe(this) { isConnected ->
-            if (!isConnected) showToast("No Connection")
+            if (!isConnected) showToast("No Internet Connection!")
+            binding.button.isEnabled = isConnected
         }
     }
 
@@ -150,4 +161,5 @@ class LoginActivity : AppCompatActivity(), Authentication {
     ) {
         TODO("Not yet implemented")
     }
+
 }

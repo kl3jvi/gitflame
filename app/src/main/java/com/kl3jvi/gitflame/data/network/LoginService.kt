@@ -9,9 +9,15 @@ import retrofit2.http.POST
 
 interface LoginService {
 
-    @FormUrlEncoded
+//    @GET("user")
+//    fun loginAccessToken(): Observable<Login?>?
+//
+//    @POST("authorizations")
+//    fun login(@Body authModel: AuthModel): Observable<AccessTokenModel?>?
+
     @POST("access_token")
     @Headers("Accept: application/json")
+    @FormUrlEncoded
     suspend fun getAccessToken(
         @Field("code") code: String,
         @Field("client_id") clientId: String,

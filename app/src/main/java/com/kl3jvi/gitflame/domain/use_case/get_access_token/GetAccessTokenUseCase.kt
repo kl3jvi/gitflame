@@ -20,7 +20,11 @@ class GetAccessTokenUseCase @Inject constructor(
         redirectUrl: String
     ): Flow<Resource<AccessTokenModel>> {
         return repository.getAccessToken(
-            code, clientId, clientSecret, state, redirectUrl
+            code,
+            clientId,
+            clientSecret,
+            state,
+            redirectUrl
         ).flowOn(ioDispatcher)
     }
 }
