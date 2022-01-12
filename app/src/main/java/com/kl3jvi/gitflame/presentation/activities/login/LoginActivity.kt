@@ -125,6 +125,7 @@ class LoginActivity : AppCompatActivity(), Authentication {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {
+
 //                PrefGetter.setToken(token)  todo save token on preferences
 //                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
 //                    this.onUserResponse(
