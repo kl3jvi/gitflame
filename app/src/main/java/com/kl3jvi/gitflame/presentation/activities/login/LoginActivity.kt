@@ -8,8 +8,9 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.lifecycle.repeatOnLifecycle
 import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.R
 import com.kl3jvi.gitflame.common.Constants.APPLICATION_ID
@@ -41,6 +42,22 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             button.setOnClickListener {
                 customTabsIntent = CustomTabsIntent.Builder().build()
                 customTabsIntent.launchUrl(this@LoginActivity, getAuthorizationUrl())
+            }
+        }
+        checkIfUserLoggedIn()
+    }
+
+    private fun checkIfUserLoggedIn() {
+
+        lifecycleScope.launchWhenStarted {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.checkForToken().collect {
+                    if (it.isEmpty().not()) {
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             }
         }
     }
@@ -128,15 +145,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                             is State.Success -> {
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             }
                         }
                     }
                 }
-//                makeRestCall(RestProvider.getUserService(false).getUser()) { userModel: Login? ->
-//                    this.onUserResponse(
-//                        userModel
-//                    )
-//                } todo make method for geting user service
                 return
             }
         }
