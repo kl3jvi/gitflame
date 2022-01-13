@@ -12,9 +12,10 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userService: UserService
 ) : UserRepository {
-    override fun getUser(): Flow<Resource<UserModel>> {
+    override fun getUser(accessToken: String): Flow<Resource<UserModel>> {
         return object : NetworkBoundRepository<UserModel>() {
-            override suspend fun fetchFromRemote(): Response<UserModel> = userService.getUser()
+            override suspend fun fetchFromRemote(): Response<UserModel> =
+                userService.getUser("Bearer $accessToken")
         }.asFlow()
     }
 }

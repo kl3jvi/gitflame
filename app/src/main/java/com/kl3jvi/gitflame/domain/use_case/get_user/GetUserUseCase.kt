@@ -12,5 +12,5 @@ class GetUserUseCase @Inject constructor(
     private val repository: UserRepository,
     private val ioDispatcher: CoroutineDispatcher
 ) {
-    operator fun invoke(): Flow<Resource<UserModel>> = repository.getUser().flowOn(ioDispatcher)
+    operator fun invoke(accessToken:String): Flow<Resource<UserModel>> = repository.getUser(accessToken).flowOn(ioDispatcher)
 }

@@ -8,7 +8,7 @@ import retrofit2.http.*
 interface LoginService {
 
     @GET("user")
-    fun loginAccessToken(): Response<UserModel>
+    suspend fun loginAccessToken(): Response<UserModel>
 
 //    @POST("authorizations")
 //    fun login(@Body authModel: AuthModel): Observable<AccessTokenModel?>?
