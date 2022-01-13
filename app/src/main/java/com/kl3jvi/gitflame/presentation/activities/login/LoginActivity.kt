@@ -8,9 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.R
 import com.kl3jvi.gitflame.common.Constants.APPLICATION_ID
@@ -25,6 +23,8 @@ import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import com.kl3jvi.gitflame.presentation.activities.MainActivity
 import com.kl3jvi.gitflame.presentation.base.BaseActivity
+import com.skydoves.transformationlayout.TransformationCompat
+import com.skydoves.transformationlayout.onTransformationStartContainer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -36,35 +36,39 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        onTransformationStartContainer()
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        checkIfUserLoggedIn()
         binding {
             button.setOnClickListener {
                 customTabsIntent = CustomTabsIntent.Builder().build()
                 customTabsIntent.launchUrl(this@LoginActivity, getAuthorizationUrl())
             }
         }
-        checkIfUserLoggedIn()
     }
 
-    private fun checkIfUserLoggedIn() {
-
+    private fun checkIfUserLoggedIn(): Boolean {
+        var isLoggedIn = false
         lifecycleScope.launchWhenStarted {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.checkForToken().collect {
-                    if (it.isEmpty().not()) {
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }
+            viewModel.checkForToken().collect { token ->
+                isLoggedIn = token.isNotEmpty()
+                if (isLoggedIn) {
+                    val intent = Intent(
+                        this@LoginActivity,
+                        MainActivity::class.java
+                    )
+                    TransformationCompat.startActivity(binding.transformationLayout, intent)
+                    finish()
                 }
             }
         }
+        return isLoggedIn
     }
 
     override fun onResume() {
         super.onResume()
-        onHandleAuthIntent(intent)
+        if (!checkIfUserLoggedIn()) onHandleAuthIntent(intent)
     }
 
     override fun onStart() {
@@ -74,7 +78,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        onHandleAuthIntent(intent)
+        if (!checkIfUserLoggedIn()) onHandleAuthIntent(intent)
     }
 
     override fun getAuthorizationUrl(): Uri {

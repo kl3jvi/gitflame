@@ -17,7 +17,6 @@ fun CoroutineScope.launchOnIo(
     block: suspend CoroutineScope.() -> Unit
 ) = launch(Dispatchers.IO, start, block)
 
-// Im so proud of this piece of code :D
 fun <T> Flow<Resource<T>>.mapToState(): Flow<State<T>> {
     return map { resource ->
         State.fromResource(resource)
