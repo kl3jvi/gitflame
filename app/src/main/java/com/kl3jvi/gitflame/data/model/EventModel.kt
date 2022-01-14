@@ -8,51 +8,75 @@ class EventModel : ArrayList<EventModelItem>()
 
 @JsonClass(generateAdapter = true)
 data class EventModelItem(
-    @Json(name = "actor")
+    @field:Json(name = "actor")
     val actor: Actor,
-    @Json(name = "created_at")
-    val createdAt: String,
-    @Json(name = "id")
-    val id: String,
-    @Json(name = "org")
-    val org: Org,
-    @Json(name = "payload")
+    @field:Json(name = "created_at")
+    val createdAt: String?,
+    @field:Json(name = "id")
+    val id: String?,
+    @field:Json(name = "org")
+    val org: Org?,
+    @field:Json(name = "payload")
     val payload: Payload,
-    @Json(name = "public")
+    @field:Json(name = "public")
     val `public`: Boolean,
-    @Json(name = "repo")
+    @field:Json(name = "repo")
     val repo: Repo,
-    @Json(name = "type")
-    val type: String
-)
+    @field:Json(name = "type")
+    val type: String?
+) {
+    fun eventType(): String {
+        return when (type) {
+            "WatchEvent" -> "starred"
+            "CreateEvent" -> "created"
+            else -> ""
+        }
+    }
+}
 
 @JsonClass(generateAdapter = true)
 data class Org(
-    @Json(name = "avatar_url")
-    val avatarUrl: String,
-    @Json(name = "gravatar_id")
-    val gravatarId: String,
-    @Json(name = "id")
+    @field:Json(name = "avatar_url")
+    val avatarUrl: String?,
+    @field:Json(name = "gravatar_id")
+    val gravatarId: String?,
+    @field:Json(name = "id")
     val id: Int,
-    @Json(name = "login")
-    val login: String,
-    @Json(name = "url")
-    val url: String
+    @field:Json(name = "login")
+    val login: String?,
+    @field:Json(name = "url")
+    val url: String?
 )
 
 @JsonClass(generateAdapter = true)
 data class Payload(
-    @Json(name = "action")
-    val action: String
+    @field:Json(name = "action")
+    val action: String?
 )
 
 
 @JsonClass(generateAdapter = true)
 data class Repo(
-    @Json(name = "id")
+    @field:Json(name = "id")
     val id: Int,
-    @Json(name = "name")
-    val name: String,
-    @Json(name = "url")
-    val url: String
+    @field:Json(name = "name")
+    val name: String?,
+    @field:Json(name = "url")
+    val url: String?
+)
+
+@JsonClass(generateAdapter = true)
+data class Actor(
+    @field:Json(name = "avatar_url")
+    val avatarUrl: String?,
+    @field:Json(name = "display_login")
+    val displayLogin: String?,
+    @field:Json(name = "gravatar_id")
+    val gravatarId: String?,
+    @field:Json(name = "id")
+    val id: Int,
+    @field:Json(name = "login")
+    val login: String?,
+    @field:Json(name = "url")
+    val url: String?
 )

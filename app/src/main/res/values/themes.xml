@@ -14,7 +14,6 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/regular</item>
         <item name="android:textColorHint">@color/grayTextColor</item>
-        <item name="android:colorBackground">@color/primaryBlackBackground</item>
     </style>
 
     <style name="Theme.GitFlame" parent="Base.Theme.GitFlame" />

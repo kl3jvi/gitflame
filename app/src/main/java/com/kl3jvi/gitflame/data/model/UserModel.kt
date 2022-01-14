@@ -33,7 +33,7 @@ data class UserModel(
      @field:Json(name = "gravatar_id")
     val gravatarId: String?,
      @field:Json(name = "hireable")
-    val hireable: Boolean,
+    val hireable: Boolean?,
      @field:Json(name = "html_url")
     val htmlUrl: String?,
      @field:Json(name = "id")

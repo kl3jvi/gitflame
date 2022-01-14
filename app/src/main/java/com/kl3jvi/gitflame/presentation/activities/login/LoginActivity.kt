@@ -51,14 +51,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun checkIfUserLoggedIn(): Boolean {
         var isLoggedIn = false
         lifecycleScope.launchWhenStarted {
-            viewModel.checkForToken().collect { token ->
+            viewModel.getToken().collect { token ->
                 isLoggedIn = token.isNotEmpty()
                 if (isLoggedIn) {
                     val intent = Intent(
                         this@LoginActivity,
                         MainActivity::class.java
                     )
-                    TransformationCompat.startActivity(binding.transformationLayout, intent)
+                    startActivity( intent)
                     finish()
                 }
             }

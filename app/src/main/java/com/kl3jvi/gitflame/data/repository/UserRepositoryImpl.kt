@@ -1,7 +1,7 @@
 package com.kl3jvi.gitflame.data.repository
 
 import com.kl3jvi.gitflame.common.Resource
-import com.kl3jvi.gitflame.data.model.EventModel
+import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.data.model.UserModel
 import com.kl3jvi.gitflame.data.network.UserService
 import com.kl3jvi.gitflame.domain.repository.NetworkBoundRepository
@@ -20,9 +20,9 @@ class UserRepositoryImpl @Inject constructor(
         }.asFlow()
     }
 
-    override fun getReceivedEvents(username: String): Flow<Resource<EventModel>> {
-        return object : NetworkBoundRepository<EventModel>() {
-            override suspend fun fetchFromRemote(): Response<EventModel> =
+    override fun getReceivedEvents(username: String): Flow<Resource<List<EventModelItem>>> {
+        return object : NetworkBoundRepository<List<EventModelItem>>() {
+            override suspend fun fetchFromRemote(): Response<List<EventModelItem>> =
                 userService.getReceivedEvents(username)
         }.asFlow()
     }

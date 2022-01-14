@@ -10,10 +10,15 @@ import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import dagger.hilt.android.AndroidEntryPoint
+
 
 abstract class BaseFragment<T : ViewDataBinding> constructor(
     @LayoutRes private val contentLayoutId: Int
 ) : Fragment() {
+
+    abstract fun observeViewModel()
+    abstract fun initViews()
 
     /** This interface is generated during compilation to contain getters for all used instance `BindingAdapters`. */
     protected var bindingComponent: DataBindingComponent? = DataBindingUtil.getDefaultComponent()
@@ -54,6 +59,12 @@ abstract class BaseFragment<T : ViewDataBinding> constructor(
         _binding =
             DataBindingUtil.inflate(inflater, contentLayoutId, container, false, bindingComponent)
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeViewModel()
+        initViews()
     }
 
     /**

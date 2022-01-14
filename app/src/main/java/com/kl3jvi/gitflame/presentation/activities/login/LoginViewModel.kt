@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
         dataStoreManager.saveTokenToPreferencesStore(token)
     }
 
-    fun checkForToken() = dataStoreManager.getTokenFromPreferencesStore()
+    fun getToken() = dataStoreManager.getTokenFromPreferencesStore()
 
     fun getUser(accessToken: String) = getUserUseCase(accessToken = accessToken).mapToState()
 

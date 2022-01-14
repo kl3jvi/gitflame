@@ -1,13 +1,15 @@
 package com.kl3jvi.gitflame.presentation.ui.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kl3jvi.gitflame.common.mapToState
+import com.kl3jvi.gitflame.domain.use_case.get_user_feed.GetUserFeedUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getUserFeedUseCase: GetUserFeedUseCase
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
-    }
-    val text: LiveData<String> = _text
+    fun getUserFeed(username: String) = getUserFeedUseCase(username).mapToState()
 }

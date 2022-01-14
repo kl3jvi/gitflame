@@ -9,4 +9,6 @@ object Constants {
     const val CLIENT_SECRET = BuildConfig.GIT_SECRET
     const val REDIRECT_URL = BuildConfig.REDIRECT_URI
     const val APPLICATION_ID = BuildConfig.APPLICATION_ID
+
+    fun emptyString() = ""
 }
