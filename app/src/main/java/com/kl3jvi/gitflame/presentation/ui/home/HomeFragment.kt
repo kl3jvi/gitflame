@@ -40,11 +40,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             loginViewModel.getToken().collect { collectedToken ->
                 loginViewModel.getUser(collectedToken).collect { state ->
                     when (state) {
-                        is State.Error -> {}
-                        is State.Loading -> {}
+                        is State.Error -> {
+                            showLoading(false)
+                        }
+                        is State.Loading -> {
+                            showLoading(true)
+                        }
                         is State.Success -> {
                             val username = state.data.login ?: ""
                             getUserFeed(username)
+                            binding.swipeRefreshLayout.setOnRefreshListener { getUserFeed(username) }
+                            if (adapter.itemCount == 0) getUserFeed(username)
+                            showLoading(false)
                         }
                     }
                 }
@@ -56,10 +63,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         lifecycleScope.launch {
             homeViewModel.getUserFeed(username).collect {
                 adapter.submitData(it)
+                showLoading(false)
             }
         }
     }
 
-    override fun initViews() {}
+    override fun initViews() {
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.swipeRefreshLayout.isRefreshing = isLoading
+    }
 
 }

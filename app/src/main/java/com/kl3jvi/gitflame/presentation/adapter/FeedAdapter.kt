@@ -19,7 +19,6 @@ class FeedAdapter :
         fun bindItem(event: EventModelItem) {
             binding.apply {
                 eventItem = event
-                Log.e("Event image url", event.actor.avatarUrl ?: "")
                 executePendingBindings()
             }
         }

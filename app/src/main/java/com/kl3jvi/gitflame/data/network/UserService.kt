@@ -1,6 +1,5 @@
 package com.kl3jvi.gitflame.data.network
 
-import com.kl3jvi.gitflame.data.model.EventModel
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.data.model.UserModel
 import retrofit2.Response

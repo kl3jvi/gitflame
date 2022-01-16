@@ -8,6 +8,8 @@
         <variable
             name="eventItem"
             type="com.kl3jvi.gitflame.data.model.EventModelItem" />
+
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
+                    android:text="@{eventItem.type.event}"
                     android:textColor="@color/black"
                     android:visibility="gone"
                     tools:text="Hello World"

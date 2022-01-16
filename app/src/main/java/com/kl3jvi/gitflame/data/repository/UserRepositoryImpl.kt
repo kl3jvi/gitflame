@@ -36,5 +36,4 @@ class UserRepositoryImpl @Inject constructor(
     companion object {
         private const val NETWORK_PAGE_SIZE = 30 // Default is 30 , MAX = 100
     }
-
 }

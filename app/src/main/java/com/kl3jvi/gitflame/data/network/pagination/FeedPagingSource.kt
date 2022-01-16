@@ -12,10 +12,6 @@ class FeedPagingSource(
 ) : PagingSource<Int, EventModelItem>() {
     override fun getRefreshKey(state: PagingState<Int, EventModelItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
-            // This loads starting from previous page, but since PagingConfig.initialLoadSize spans
-            // multiple pages, the initial load will still load items centered around
-            // anchorPosition. This also prevents needing to immediately launch prepend due to
-            // prefetchDistance.
             state.closestPageToPosition(anchorPosition)?.prevKey
         }
     }
@@ -23,18 +19,15 @@ class FeedPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EventModelItem> {
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
-            val response = userService.getReceivedEvents(username, page)
+            val eventResponse = userService.getReceivedEvents(username, page)
             LoadResult.Page(
-                data = response,
+                data = eventResponse,
                 prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
-                nextKey = if (page == MAXIMUM_PAGES) null else page + 1
+                nextKey = if (eventResponse.isNullOrEmpty()) null else page + 1
             )
         } catch (exception: Exception) {
+            exception.printStackTrace()
             LoadResult.Error(exception)
         }
-    }
-
-    companion object {
-        const val MAXIMUM_PAGES = 5
     }
 }

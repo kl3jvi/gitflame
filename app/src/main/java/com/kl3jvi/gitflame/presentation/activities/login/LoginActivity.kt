@@ -23,7 +23,6 @@ import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import com.kl3jvi.gitflame.presentation.activities.MainActivity
 import com.kl3jvi.gitflame.presentation.base.BaseActivity
-import com.skydoves.transformationlayout.TransformationCompat
 import com.skydoves.transformationlayout.onTransformationStartContainer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -58,7 +57,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                         this@LoginActivity,
                         MainActivity::class.java
                     )
-                    startActivity( intent)
+                    startActivity(intent)
                     finish()
                 }
             }
@@ -78,7 +77,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        if (!checkIfUserLoggedIn()) onHandleAuthIntent(intent)
+        onHandleAuthIntent(intent)
     }
 
     override fun getAuthorizationUrl(): Uri {
@@ -120,7 +119,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                         }
                     }
                 } else {
-                    // show error couldn't login
                     Toast.makeText(this, "Error!", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -141,19 +139,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             if (!token.isNullOrEmpty()) {
                 Log.e("Token saved", token)
                 viewModel.saveTokenToDataStore(token)
-                lifecycleScope.launch {
-                    viewModel.getUser(token).collect { state ->
-                        when (state) {
-                            is State.Error -> {}
-                            is State.Loading -> {}
-                            is State.Success -> {
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }
-                        }
-                    }
-                }
                 return
             }
         }

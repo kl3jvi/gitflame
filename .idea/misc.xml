@@ -21,6 +21,7 @@
         <entry key="app/src/main/res/drawable/ic_repo.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_star_filled.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_trash.xml" value="0.17592592592592593" />
+        <entry key="app/src/main/res/drawable/scrollbar.xml" value="0.2609375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/layout/activity_login_fragment.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24479166666666666" />
