@@ -1,9 +1,13 @@
 package com.kl3jvi.gitflame.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.kl3jvi.gitflame.common.Resource
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.data.model.UserModel
 import com.kl3jvi.gitflame.data.network.UserService
+import com.kl3jvi.gitflame.data.network.pagination.FeedPagingSource
 import com.kl3jvi.gitflame.domain.repository.NetworkBoundRepository
 import com.kl3jvi.gitflame.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow
@@ -20,12 +24,17 @@ class UserRepositoryImpl @Inject constructor(
         }.asFlow()
     }
 
-    override fun getReceivedEvents(username: String): Flow<Resource<List<EventModelItem>>> {
-        return object : NetworkBoundRepository<List<EventModelItem>>() {
-            override suspend fun fetchFromRemote(): Response<List<EventModelItem>> =
-                userService.getReceivedEvents(username)
-        }.asFlow()
+    override fun getReceivedEvents(
+        username: String
+    ): Flow<PagingData<EventModelItem>> {
+        return Pager(
+            config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
+            pagingSourceFactory = { FeedPagingSource(userService, username) }
+        ).flow
     }
 
+    companion object {
+        private const val NETWORK_PAGE_SIZE = 30 // Default is 30 , MAX = 100
+    }
 
 }

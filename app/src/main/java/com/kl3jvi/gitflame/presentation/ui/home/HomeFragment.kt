@@ -15,6 +15,7 @@ import com.kl3jvi.gitflame.presentation.adapter.FeedAdapter
 import com.kl3jvi.gitflame.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -23,10 +24,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModels()
     private val loginViewModel: LoginViewModel by activityViewModels()
 
-    private lateinit var adapter: FeedAdapter
+    private var adapter = FeedAdapter()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = FeedAdapter()
+
         binding.feedList.layoutManager = LinearLayoutManager(requireContext())
         binding.feedList.adapter = adapter
 
@@ -55,17 +56,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun getUserFeed(username: String) {
         lifecycleScope.launch() {
-            homeViewModel.getUserFeed(username).collect { state ->
-                when (state) {
-                    is State.Error -> {
-                    }
-                    is State.Loading -> {
-
-                    }
-                    is State.Success -> {
-                        adapter.submitList(state.data)
-                    }
-                }
+            homeViewModel.getUserFeed(username).collectLatest {
+                adapter.submitData(it)
             }
         }
     }

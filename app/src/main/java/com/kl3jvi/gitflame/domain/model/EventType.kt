@@ -2,7 +2,7 @@ package com.kl3jvi.gitflame.domain.model
 
 import com.kl3jvi.gitflame.R
 
-enum class EventType(event: Int, icon: Int) {
+enum class EventType(val event: Int, val icon: Int) {
     WatchEvent(R.string.starred, R.drawable.ic_star_filled),
     CreateEvent(R.string.created_repo, R.drawable.ic_repo),
     CommitCommentEvent(R.string.commented_on_commit, R.drawable.ic_comment),

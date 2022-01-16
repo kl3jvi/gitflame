@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -34,7 +34,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
-                app:image="@{eventItem.actor.avatarUrl}" />
+                app:avatarImage="@{eventItem.actor.avatarUrl}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -49,8 +49,8 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="3"
-                    android:textColor="@color/black"
-                    android:text="@{eventItem.actor.displayLogin  + eventItem.eventType()}" />
+                    android:text="@{eventItem.actor.displayLogin}"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/description"

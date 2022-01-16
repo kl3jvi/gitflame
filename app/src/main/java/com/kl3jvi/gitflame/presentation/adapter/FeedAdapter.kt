@@ -2,14 +2,13 @@ package com.kl3jvi.gitflame.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.databinding.ItemHomeFeedBinding
 
-class FeedAdapter : ListAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(
+class FeedAdapter : PagingDataAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(
     FeedDiffCallback()
 ) {
 
@@ -24,7 +23,7 @@ class FeedAdapter : ListAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(
 //            }
         }
 
-//        private fun navigateToDetails(pokemon: Pokemon, view: View) {
+//        private fun navigateToDetails(event: EventModelItem, view: View) {
 //            val direction =
 //                MainFragmentDirections.actionMainFragmentToDetailsFragment(pokemon)
 //            view.findNavController().navigate(direction)
@@ -47,8 +46,13 @@ class FeedAdapter : ListAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(
         return FeedViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FeedViewHolder, position: Int) =
-        holder.bindItem(getItem(position))
+    override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {
+        val event = getItem(position)
+        if (event != null) {
+            holder.bindItem(event)
+        }
+    }
+
 }
 
 private class FeedDiffCallback : DiffUtil.ItemCallback<EventModelItem>() {
@@ -59,6 +63,7 @@ private class FeedDiffCallback : DiffUtil.ItemCallback<EventModelItem>() {
     ): Boolean {
         return oldItem.id == newItem.id
     }
+
 
     override fun areContentsTheSame(
         oldItem: EventModelItem,

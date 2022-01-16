@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.load
 import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 
 object ViewBindings {
     @JvmStatic
@@ -16,4 +17,19 @@ object ViewBindings {
             }
         }
     }
+
+
+    @JvmStatic
+    @BindingAdapter("avatarImage")
+    fun setAvatarImage(image: ImageView, url: String?) {
+        if (!url.isNullOrEmpty()) {
+            image.load(url) {
+                crossfade(true)
+                diskCachePolicy(CachePolicy.ENABLED)
+                transformations(CircleCropTransformation())
+            }
+        }
+    }
 }
+
+
