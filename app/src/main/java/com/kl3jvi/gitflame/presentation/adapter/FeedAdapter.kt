@@ -1,5 +1,6 @@
 package com.kl3jvi.gitflame.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -8,30 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.databinding.ItemHomeFeedBinding
 
-class FeedAdapter : PagingDataAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(
-    FeedDiffCallback()
-) {
+class FeedAdapter :
+    PagingDataAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(FeedDiffCallback()) {
 
     inner class FeedViewHolder constructor(
         private val binding: ItemHomeFeedBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-//            binding.setClickListener { view ->
-//                binding.pokemonObj?.let { pokemonDetails ->
-//                    navigateToDetails(pokemonDetails, view)
-//                }
-//            }
-        }
-
-//        private fun navigateToDetails(event: EventModelItem, view: View) {
-//            val direction =
-//                MainFragmentDirections.actionMainFragmentToDetailsFragment(pokemon)
-//            view.findNavController().navigate(direction)
-//        }
 
         fun bindItem(event: EventModelItem) {
             binding.apply {
                 eventItem = event
+                Log.e("Event image url", event.actor.avatarUrl ?: "")
                 executePendingBindings()
             }
         }
@@ -56,19 +44,11 @@ class FeedAdapter : PagingDataAdapter<EventModelItem, FeedAdapter.FeedViewHolder
 }
 
 private class FeedDiffCallback : DiffUtil.ItemCallback<EventModelItem>() {
-
-    override fun areItemsTheSame(
-        oldItem: EventModelItem,
-        newItem: EventModelItem
-    ): Boolean {
+    override fun areItemsTheSame(oldItem: EventModelItem, newItem: EventModelItem): Boolean {
         return oldItem.id == newItem.id
     }
 
-
-    override fun areContentsTheSame(
-        oldItem: EventModelItem,
-        newItem: EventModelItem
-    ): Boolean {
+    override fun areContentsTheSame(oldItem: EventModelItem, newItem: EventModelItem): Boolean {
         return oldItem == newItem
     }
 }

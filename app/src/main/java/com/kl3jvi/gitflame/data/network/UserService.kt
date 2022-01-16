@@ -17,5 +17,5 @@ interface UserService {
     suspend fun getReceivedEvents(
         @Path("username") userName: String,
         @Query("page") page: Int
-    ): EventModel
+    ): List<EventModelItem>
 }

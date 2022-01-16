@@ -34,6 +34,7 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="@dimen/dp_16"
                 android:layout_marginEnd="@dimen/dp_16"
+                tools:src="@tools:sample/avatars"
                 app:avatarImage="@{eventItem.actor.avatarUrl}" />
 
             <LinearLayout

@@ -25,7 +25,6 @@ object ViewBindings {
         if (!url.isNullOrEmpty()) {
             image.load(url) {
                 crossfade(true)
-                diskCachePolicy(CachePolicy.ENABLED)
                 transformations(CircleCropTransformation())
             }
         }

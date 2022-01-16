@@ -7,7 +7,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kl3jvi.gitflame.R
-import com.kl3jvi.gitflame.common.Constants.emptyString
 import com.kl3jvi.gitflame.common.State
 import com.kl3jvi.gitflame.databinding.FragmentHomeBinding
 import com.kl3jvi.gitflame.presentation.activities.login.LoginViewModel
@@ -15,7 +14,6 @@ import com.kl3jvi.gitflame.presentation.adapter.FeedAdapter
 import com.kl3jvi.gitflame.presentation.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -24,10 +22,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val homeViewModel: HomeViewModel by viewModels()
     private val loginViewModel: LoginViewModel by activityViewModels()
 
-    private var adapter = FeedAdapter()
+    private lateinit var adapter: FeedAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        adapter = FeedAdapter()
         binding.feedList.layoutManager = LinearLayoutManager(requireContext())
         binding.feedList.adapter = adapter
 
@@ -55,26 +53,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun getUserFeed(username: String) {
-        lifecycleScope.launch() {
-            homeViewModel.getUserFeed(username).collectLatest {
+        lifecycleScope.launch {
+            homeViewModel.getUserFeed(username).collect {
                 adapter.submitData(it)
             }
         }
     }
 
-    private fun getToken(): String {
-        var token = emptyString()
-        lifecycleScope.launch {
-            loginViewModel.getToken().collect { collectedToken ->
-                token = collectedToken
-            }
-        }
-        return token
-    }
-
-    override fun initViews() {
-
-    }
-
+    override fun initViews() {}
 
 }

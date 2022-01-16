@@ -5,9 +5,8 @@ import androidx.paging.PagingState
 import com.kl3jvi.gitflame.common.Constants.STARTING_PAGE_INDEX
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.data.network.UserService
-import javax.inject.Inject
 
-class FeedPagingSource @Inject constructor(
+class FeedPagingSource(
     private val userService: UserService,
     private val username: String
 ) : PagingSource<Int, EventModelItem>() {
@@ -22,13 +21,11 @@ class FeedPagingSource @Inject constructor(
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, EventModelItem> {
-
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
             val response = userService.getReceivedEvents(username, page)
-            val photos = response.results
             LoadResult.Page(
-                data = photos,
+                data = response,
                 prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
                 nextKey = if (page == MAXIMUM_PAGES) null else page + 1
             )
