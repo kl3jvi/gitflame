@@ -1,6 +1,5 @@
 package com.kl3jvi.gitflame.di
 
-import android.app.Activity
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

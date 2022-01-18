@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.R
 import com.kl3jvi.gitflame.common.Constants.APPLICATION_ID
+import com.kl3jvi.gitflame.common.Constants.AUTHENTICATION_TOKEN_FOR_INTENT
 import com.kl3jvi.gitflame.common.Constants.CLIENT_ID
 import com.kl3jvi.gitflame.common.Constants.CLIENT_SECRET
 import com.kl3jvi.gitflame.common.Constants.REDIRECT_URL
@@ -19,11 +20,11 @@ import com.kl3jvi.gitflame.common.NetworkUtil
 import com.kl3jvi.gitflame.common.State
 import com.kl3jvi.gitflame.common.ViewUtils.showSnack
 import com.kl3jvi.gitflame.common.ViewUtils.showToast
+import com.kl3jvi.gitflame.common.launchActivity
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import com.kl3jvi.gitflame.presentation.activities.MainActivity
 import com.kl3jvi.gitflame.presentation.base.BaseActivity
-import com.skydoves.transformationlayout.onTransformationStartContainer
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -35,10 +36,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        onTransformationStartContainer()
         super.onCreate(savedInstanceState)
         installSplashScreen()
         checkIfUserLoggedIn()
+
+
         binding {
             button.setOnClickListener {
                 customTabsIntent = CustomTabsIntent.Builder().build()
@@ -47,17 +49,19 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
+    /**
+     * Moves to main activity and also returns logged in state to check it
+     * when reopening app and not transitioning 2 times to home page after login
+     */
     private fun checkIfUserLoggedIn(): Boolean {
         var isLoggedIn = false
         lifecycleScope.launchWhenStarted {
             viewModel.getToken().collect { token ->
                 isLoggedIn = token.isNotEmpty()
                 if (isLoggedIn) {
-                    val intent = Intent(
-                        this@LoginActivity,
-                        MainActivity::class.java
-                    )
-                    startActivity(intent)
+                    launchActivity<MainActivity> {
+                        putExtra(AUTHENTICATION_TOKEN_FOR_INTENT, token)
+                    }
                     finish()
                 }
             }

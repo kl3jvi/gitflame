@@ -11,29 +11,29 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
     <string name="sign_in_with_github">Sign In With GitHub</string>
-    <string name="starred">Starred</string>
-    <string name="created_repo">Created</string>
-    <string name="commented_on_commit">Commented on commit</string>
-    <string name="followed">Followed</string>
-    <string name="forked">Forked</string>
-    <string name="created_gist">Gist</string>
-    <string name="gollum">Wiki</string>
-    <string name="commented_on_issue">Comment on Issue</string>
-    <string name="created_issue">Issue</string>
+    <string name="starred">starred</string>
+    <string name="created_repo">created</string>
+    <string name="commented_on_commit">commented on commit</string>
+    <string name="followed">followed</string>
+    <string name="forked">forked</string>
+    <string name="created_gist">gist</string>
+    <string name="gollum">wiki</string>
+    <string name="commented_on_issue">commented on issue</string>
+    <string name="created_issue">created an issue</string>
     <string name="member">Member</string>
     <string name="public_event">Open-sourced</string>
     <string name="pull_request">Pull Requests</string>
     <string name="pr_comment_review">Pull Request comment</string>
     <string name="pr_review_event">Pull Request</string>
     <string name="repo_event">Repository</string>
-    <string name="pushed">Pushed to</string>
+    <string name="pushed">pushed to</string>
     <string name="team_event">Team</string>
-    <string name="deleted">Deleted</string>
-    <string name="released">Released</string>
+    <string name="deleted">deleted</string>
+    <string name="released">released</string>
     <string name="organization_event">Organization</string>
     <string name="card_event">Card</string>
     <string name="project_event">Project</string>
+    <string name="avatar_icon">This is the profile photo of event creator.</string>
 </resources>

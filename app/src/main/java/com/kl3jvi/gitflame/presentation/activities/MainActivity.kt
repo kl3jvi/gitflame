@@ -1,6 +1,5 @@
 package com.kl3jvi.gitflame.presentation.activities
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +11,8 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kl3jvi.gitflame.R
+import com.kl3jvi.gitflame.common.Constants.AUTHENTICATION_TOKEN_FOR_INTENT
+import com.kl3jvi.gitflame.common.launchActivity
 import com.kl3jvi.gitflame.databinding.ActivityMainBinding
 import com.kl3jvi.gitflame.presentation.activities.login.LoginActivity
 import com.kl3jvi.gitflame.presentation.activities.login.LoginViewModel
@@ -31,7 +32,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
-
+        with(intent) {
+            var authToken = getStringExtra(AUTHENTICATION_TOKEN_FOR_INTENT)
+        }
         navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -57,11 +60,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.getToken().collect { token ->
                 isLoggedIn = token.isNotEmpty()
                 if (!isLoggedIn) {
-                    val intent = Intent(
-                        this@MainActivity,
-                        LoginActivity::class.java
-                    )
-                    startActivity(intent)
+                    launchActivity<LoginActivity> {}
                     finish()
                 }
             }

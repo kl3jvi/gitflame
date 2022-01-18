@@ -21,11 +21,11 @@ data class UserModel(
      @field:Json(name = "events_url")
     val eventsUrl: String?,
      @field:Json(name = "followers")
-    val followers: Int,
+    val followers: Int?,
      @field:Json(name = "followers_url")
     val followersUrl: String?,
      @field:Json(name = "following")
-    val following: Int,
+    val following: Int?,
      @field:Json(name = "following_url")
     val followingUrl: String?,
      @field:Json(name = "gists_url")
@@ -49,9 +49,9 @@ data class UserModel(
      @field:Json(name = "organizations_url")
     val organizationsUrl: String?,
      @field:Json(name = "public_gists")
-    val publicGists: Int,
+    val publicGists: Int?,
      @field:Json(name = "public_repos")
-    val publicRepos: Int,
+    val publicRepos: Int?,
      @field:Json(name = "received_events_url")
     val receivedEventsUrl: String?,
      @field:Json(name = "repos_url")

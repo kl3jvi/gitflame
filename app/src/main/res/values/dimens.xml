@@ -8,4 +8,6 @@
     <dimen name="dp_16">16dp</dimen>
     <dimen name="grid_spacing">0dp</dimen>
     <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
 </resources>
