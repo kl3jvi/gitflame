@@ -6,7 +6,7 @@
 Yet another **open-source** GitHub client app built from scratch using latest and best Android practices.  
 > **WARNING**: This app is under development and is not yet finished!
 
-<!-- <img src="/previews/preview.gif" align="right" width="32%"/> -->
+<img src="/assets/Screenshot_1642514285.png" align="right" width="32%"/>
 
 ## Tech stack & Open-source libraries
 - Minimum SDK level 21
