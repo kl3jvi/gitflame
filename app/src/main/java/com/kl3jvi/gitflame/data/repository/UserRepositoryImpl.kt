@@ -3,7 +3,7 @@ package com.kl3jvi.gitflame.data.repository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.kl3jvi.gitflame.common.Resource
+import com.kl3jvi.gitflame.common.network_state.Resource
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.data.model.UserModel
 import com.kl3jvi.gitflame.data.network.UserService

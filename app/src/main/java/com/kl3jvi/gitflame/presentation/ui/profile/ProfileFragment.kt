@@ -1,32 +1,43 @@
 package com.kl3jvi.gitflame.presentation.ui.profile
 
-import androidx.lifecycle.ViewModelProvider
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.kl3jvi.gitflame.R
+import com.kl3jvi.gitflame.common.network_state.State
+import com.kl3jvi.gitflame.common.utils.Constants.emptyString
+import com.kl3jvi.gitflame.common.utils.collectFlow
+import com.kl3jvi.gitflame.databinding.FragmentProfileBinding
+import com.kl3jvi.gitflame.presentation.activities.login.LoginViewModel
+import com.kl3jvi.gitflame.presentation.base.BindingFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class ProfileFragment : Fragment() {
+@AndroidEntryPoint
+class ProfileFragment : BindingFragment<FragmentProfileBinding>(R.layout.fragment_profile) {
 
-    companion object {
-        fun newInstance() = ProfileFragment()
+
+    private val profileViewModel: ProfileViewModel by viewModels()
+    private val loginViewModel: LoginViewModel by activityViewModels()
+
+
+    override fun observeViewModel() {
+        collectFlow(loginViewModel.getToken()) { token ->
+            collectFlow(profileViewModel.getUser(token)) { state ->
+                when (state) {
+                    is State.Error -> {
+
+                    }
+                    is State.Loading -> TODO()
+                    is State.Success -> {
+                        binding.userData = state.data
+                    }
+                }
+            }
+        }
     }
 
-    private lateinit var viewModel: ProfileViewModel
+    override fun initViews() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_profile, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
 }

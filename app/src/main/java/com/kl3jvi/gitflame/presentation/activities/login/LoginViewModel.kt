@@ -2,13 +2,12 @@ package com.kl3jvi.gitflame.presentation.activities.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kl3jvi.gitflame.common.launchOnDefault
-import com.kl3jvi.gitflame.common.mapToState
+import com.kl3jvi.gitflame.common.utils.launchOnDefault
+import com.kl3jvi.gitflame.common.utils.mapToState
 import com.kl3jvi.gitflame.data.persistence.DataStoreManager
 import com.kl3jvi.gitflame.domain.use_case.get_access_token.GetAccessTokenUseCase
 import com.kl3jvi.gitflame.domain.use_case.get_user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel

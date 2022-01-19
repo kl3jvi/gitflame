@@ -7,9 +7,8 @@ import android.text.SpannableStringBuilder
 import androidx.core.content.ContextCompat
 import androidx.core.text.bold
 import com.kl3jvi.gitflame.R
-import com.kl3jvi.gitflame.common.Constants.emptyString
-import com.kl3jvi.gitflame.common.DateParser
-import com.kl3jvi.gitflame.common.DateParser.Companion.getTimeAgo
+import com.kl3jvi.gitflame.common.utils.Constants.emptyString
+import com.kl3jvi.gitflame.common.utils.DateParser.Companion.getTimeAgo
 import com.kl3jvi.gitflame.domain.model.EventType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -69,7 +68,7 @@ data class EventModelItem(
     }
 
     fun getTime(): CharSequence {
-        return getTimeAgo(createdAt)
+        return getTimeAgo(createdAt ?: "")
     }
 }
 

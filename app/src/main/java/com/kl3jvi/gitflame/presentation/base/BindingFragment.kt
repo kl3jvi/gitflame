@@ -10,12 +10,11 @@ import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import dagger.hilt.android.AndroidEntryPoint
 
 
-abstract class BaseFragment<T : ViewDataBinding> constructor(
-    @LayoutRes private val contentLayoutId: Int
-) : Fragment() {
+abstract class BindingFragment<T : ViewDataBinding> constructor(
+    @LayoutRes private val contentLayoutId: Int) :
+    Fragment() {
 
     abstract fun observeViewModel()
     abstract fun initViews()

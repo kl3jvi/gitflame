@@ -1,4 +1,4 @@
-package com.kl3jvi.gitflame.common
+package com.kl3jvi.gitflame.common.network_state
 
 sealed class Resource<T> {
     class Success<T>(val data: T) : Resource<T>()

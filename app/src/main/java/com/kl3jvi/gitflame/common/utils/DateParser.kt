@@ -1,11 +1,11 @@
-package com.kl3jvi.gitflame.common
+package com.kl3jvi.gitflame.common.utils
 
 import android.text.format.DateUtils
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DateParser{
+class DateParser {
     private val dateFormat: DateFormat
 
     init {
@@ -16,19 +16,19 @@ class DateParser{
     companion object {
         private val instance = DateParser()
 
-        fun getTimeAgo(toParse: String?): CharSequence {
-            try {
-                val parsedDate = instance.dateFormat.parse(toParse)
+        fun getTimeAgo(toParse: String): CharSequence {
+            return try {
                 val now = System.currentTimeMillis()
-                return DateUtils.getRelativeTimeSpanString(
+                val parsedDate = instance.dateFormat.parse(toParse)
+                DateUtils.getRelativeTimeSpanString(
                     parsedDate.time,
                     now,
                     DateUtils.SECOND_IN_MILLIS
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
+                "N/a"
             }
-            return "N/A"
         }
 
     }

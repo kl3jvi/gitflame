@@ -1,9 +1,11 @@
-package com.kl3jvi.gitflame.common
+package com.kl3jvi.gitflame.common.utils
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import com.kl3jvi.gitflame.common.utils.Constants.emptyString
 
 
 /**
@@ -30,3 +32,4 @@ inline fun <reified T : Any> Context.launchActivity(
 
 inline fun <reified T : Any> newIntent(context: Context): Intent =
     Intent(context, T::class.java)
+

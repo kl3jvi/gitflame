@@ -1,4 +1,4 @@
-package com.kl3jvi.gitflame.common
+package com.kl3jvi.gitflame.common.utils
 
 import com.kl3jvi.gitflame.BuildConfig
 

@@ -8,11 +8,4 @@ interface Authentication {
     fun getAuthorizationUrl(): Uri
     fun onHandleAuthIntent(intent: Intent?)
     fun onTokenResponse(response: AccessTokenModel?)
-    fun login(
-        username: String,
-        password: String,
-        twoFactorCode: String?,
-        isBasicAuth: Boolean,
-        endpoint: String?
-    )
 }

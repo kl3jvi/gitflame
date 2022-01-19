@@ -1,6 +1,6 @@
 package com.kl3jvi.gitflame.domain.use_case.get_access_token
 
-import com.kl3jvi.gitflame.common.Resource
+import com.kl3jvi.gitflame.common.network_state.Resource
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.domain.repository.LoginRepository
 import kotlinx.coroutines.CoroutineDispatcher

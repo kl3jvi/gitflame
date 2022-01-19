@@ -2,7 +2,7 @@ package com.kl3jvi.gitflame.domain.repository
 
 import android.util.Log
 import androidx.annotation.MainThread
-import com.kl3jvi.gitflame.common.Resource
+import com.kl3jvi.gitflame.common.network_state.Resource
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import retrofit2.Response

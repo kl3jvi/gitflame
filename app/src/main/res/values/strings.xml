@@ -36,4 +36,6 @@
     <string name="card_event">Card</string>
     <string name="project_event">Project</string>
     <string name="avatar_icon">This is the profile photo of event creator.</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
 </resources>

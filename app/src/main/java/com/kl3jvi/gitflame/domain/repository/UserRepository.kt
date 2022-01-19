@@ -1,7 +1,7 @@
 package com.kl3jvi.gitflame.domain.repository
 
 import androidx.paging.PagingData
-import com.kl3jvi.gitflame.common.Resource
+import com.kl3jvi.gitflame.common.network_state.Resource
 import com.kl3jvi.gitflame.data.model.EventModelItem
 import com.kl3jvi.gitflame.data.model.UserModel
 import kotlinx.coroutines.flow.Flow

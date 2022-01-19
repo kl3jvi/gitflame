@@ -32,4 +32,9 @@
     <style name="Theme.GitFlame.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.GitFlame.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

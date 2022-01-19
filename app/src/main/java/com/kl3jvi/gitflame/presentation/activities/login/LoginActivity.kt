@@ -11,26 +11,23 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.R
-import com.kl3jvi.gitflame.common.Constants.APPLICATION_ID
-import com.kl3jvi.gitflame.common.Constants.AUTHENTICATION_TOKEN_FOR_INTENT
-import com.kl3jvi.gitflame.common.Constants.CLIENT_ID
-import com.kl3jvi.gitflame.common.Constants.CLIENT_SECRET
-import com.kl3jvi.gitflame.common.Constants.REDIRECT_URL
-import com.kl3jvi.gitflame.common.NetworkUtil
-import com.kl3jvi.gitflame.common.State
-import com.kl3jvi.gitflame.common.ViewUtils.showSnack
-import com.kl3jvi.gitflame.common.ViewUtils.showToast
-import com.kl3jvi.gitflame.common.launchActivity
+import com.kl3jvi.gitflame.common.network_state.State
+import com.kl3jvi.gitflame.common.utils.*
+import com.kl3jvi.gitflame.common.utils.Constants.APPLICATION_ID
+import com.kl3jvi.gitflame.common.utils.Constants.CLIENT_ID
+import com.kl3jvi.gitflame.common.utils.Constants.CLIENT_SECRET
+import com.kl3jvi.gitflame.common.utils.Constants.REDIRECT_URL
 import com.kl3jvi.gitflame.data.model.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import com.kl3jvi.gitflame.presentation.activities.MainActivity
-import com.kl3jvi.gitflame.presentation.base.BaseActivity
+import com.kl3jvi.gitflame.presentation.base.BindingActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login), Authentication {
+class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login),
+    Authentication {
 
     private lateinit var customTabsIntent: CustomTabsIntent
     private val viewModel: LoginViewModel by viewModels()
@@ -59,9 +56,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             viewModel.getToken().collect { token ->
                 isLoggedIn = token.isNotEmpty()
                 if (isLoggedIn) {
-                    launchActivity<MainActivity> {
-                        putExtra(AUTHENTICATION_TOKEN_FOR_INTENT, token)
-                    }
+                    binding.progressBar.show()
+                    launchActivity<MainActivity> {}
                     finish()
                 }
             }
@@ -115,7 +111,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                                 is State.Error -> {
                                     showSnack(binding.root, state.message)
                                 }
-                                is State.Loading -> {}
+                                is State.Loading -> {
+                                    binding.progressBar.show()
+                                }
                                 is State.Success -> {
                                     onTokenResponse(state.data)
                                 }
@@ -136,7 +134,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
     }
 
-
     override fun onTokenResponse(response: AccessTokenModel?) {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
@@ -148,16 +145,4 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         }
         showToast("Couldn't Login!!")
     }
-
-
-    override fun login(
-        username: String,
-        password: String,
-        twoFactorCode: String?,
-        isBasicAuth: Boolean,
-        endpoint: String?
-    ) {
-        TODO("Not yet implemented")
-    }
-
 }
