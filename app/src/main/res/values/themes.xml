@@ -33,8 +33,24 @@
 
     <style name="Theme.GitFlame.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="TabLayoutTextStyle">
+    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">?attr/colorAccent</item>
+        <item name="tabIndicatorHeight">4dp</item>
+
+        <item name="tabBackground">@color/white</item>
+        <item name="tabTextAppearance">@style/AppTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/colorPrimaryDark</item>
+    </style>
+
+    <!-- for text -->
+    <style name="AppTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/grayTextColor</item>
+        <item name="textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+
+
 
 </resources>

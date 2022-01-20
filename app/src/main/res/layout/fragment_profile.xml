@@ -20,7 +20,8 @@
             android:id="@+id/appbar"
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/dp_5">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
@@ -42,9 +43,7 @@
                         android:layout_height="@dimen/dp_60"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
                         app:avatarImage="@{userData.avatarUrl}"
-                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:src="@tools:sample/avatars" />
@@ -77,23 +76,23 @@
                         android:id="@+id/linearLayout2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:orientation="vertical"
                         android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toEndOf="@+id/linearLayout"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="@+id/linearLayout">
 
                         <TextView
                             android:id="@+id/followingCount"
                             style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{String.valueOf(userData.followers)}"
+                            android:layout_margin="@dimen/dp_5"
+                            android:text="@{String.valueOf(userData.following)}"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:layout_margin="@dimen/dp_5"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/imageView"
@@ -125,8 +124,8 @@
                             style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{String.valueOf(userData.followers)}"
                             android:layout_margin="@dimen/dp_5"
+                            android:text="@{String.valueOf(userData.followers)}"
                             android:textColor="@color/white"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -143,21 +142,92 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/bio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="@{userData.getFormattedHtml()}"
+                        android:textColor="@color/grayTextColor"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                style="@style/AppTabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="@dimen/dp_5"
+                app:tabMode="scrollable">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabItem2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/tabItem3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.tabs.TabLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">
+            app:layout_anchor="@+id/viewPager"
+            app:layout_anchorGravity="center"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
 
+        <!--        <androidx.core.widget.NestedScrollView-->
+        <!--            android:id="@+id/nestedScrollView"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            app:layout_anchor="@+id/nestedScrollView"-->
+        <!--            app:layout_anchorGravity="center"-->
+        <!--            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"-->
+        <!--            tools:ignore="SpeakableTextPresentCheck,SpeakableTextPresentCheck">-->
 
-        </androidx.core.widget.NestedScrollView>
+        <!--            <LinearLayout-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent"-->
+        <!--                android:orientation="vertical">-->
 
+        <!--                <androidx.viewpager2.widget.ViewPager2-->
+        <!--                    android:id="@+id/viewPager"-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="match_parent" />-->
+        <!--            </LinearLayout>-->
+        <!--        </androidx.core.widget.NestedScrollView>-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

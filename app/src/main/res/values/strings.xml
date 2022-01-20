@@ -38,4 +38,16 @@
     <string name="avatar_icon">This is the profile photo of event creator.</string>
     <string name="followers">Followers</string>
     <string name="following">Following</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="profile_tabs">
+        <item>About</item>
+        <item>Overview</item>
+        <item>Repositories</item>
+        <item>Activity</item>
+        <item>Starred</item>
+        <item>Gists</item>
+    </string-array>
+
 </resources>

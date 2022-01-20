@@ -11,5 +11,5 @@ object Constants {
     const val APPLICATION_ID = BuildConfig.APPLICATION_ID
     const val STARTING_PAGE_INDEX = 1
     fun emptyString() = ""
-    const val AUTHENTICATION_TOKEN_FOR_INTENT = "authToken"
+    const val AUTHENTICATION_TOKEN = "authToken"
 }
