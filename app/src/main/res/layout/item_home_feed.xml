@@ -8,6 +8,10 @@
         <import type="android.content.Context" />
 
         <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
             name="eventItem"
             type="com.kl3jvi.gitflame.data.model.EventModelItem" />
 
@@ -18,11 +22,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/grid_spacing"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{clickListener}"
         android:paddingTop="@dimen/dp_8"
         android:paddingEnd="@dimen/dp_16"
-        android:focusable="true"
-        android:clickable="true"
-        android:background="?android:selectableItemBackground"
         android:paddingBottom="@dimen/dp_8"
         tools:ignore="RtlSymmetry">
 

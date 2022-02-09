@@ -4,10 +4,10 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.kl3jvi.gitflame.common.network_state.Resource
-import com.kl3jvi.gitflame.data.model.EventModelItem
-import com.kl3jvi.gitflame.data.model.UserModel
-import com.kl3jvi.gitflame.data.network.UserService
-import com.kl3jvi.gitflame.data.network.pagination.FeedPagingSource
+import com.kl3jvi.gitflame.data.remote.dto.EventModelItem
+import com.kl3jvi.gitflame.data.remote.dto.UserModel
+import com.kl3jvi.gitflame.data.remote.network.UserService
+import com.kl3jvi.gitflame.data.remote.network.pagination.FeedPagingSource
 import com.kl3jvi.gitflame.domain.repository.NetworkBoundRepository
 import com.kl3jvi.gitflame.domain.repository.UserRepository
 import kotlinx.coroutines.flow.Flow

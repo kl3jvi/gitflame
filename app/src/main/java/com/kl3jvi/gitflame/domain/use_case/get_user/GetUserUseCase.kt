@@ -1,7 +1,7 @@
 package com.kl3jvi.gitflame.domain.use_case.get_user
 
 import com.kl3jvi.gitflame.common.network_state.Resource
-import com.kl3jvi.gitflame.data.model.UserModel
+import com.kl3jvi.gitflame.data.remote.dto.UserModel
 import com.kl3jvi.gitflame.domain.repository.UserRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

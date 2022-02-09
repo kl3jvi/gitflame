@@ -2,8 +2,8 @@ package com.kl3jvi.gitflame.di
 
 import com.kl3jvi.gitflame.common.utils.Constants.BASE_API_URL
 import com.kl3jvi.gitflame.common.utils.Constants.BASE_URL
-import com.kl3jvi.gitflame.data.network.LoginService
-import com.kl3jvi.gitflame.data.network.UserService
+import com.kl3jvi.gitflame.data.remote.network.LoginService
+import com.kl3jvi.gitflame.data.remote.network.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

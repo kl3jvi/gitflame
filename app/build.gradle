@@ -45,7 +45,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def fireAuth = "21.0.1"
     implementation "com.google.firebase:firebase-auth:$fireAuth"
-    def navigationComponentVersion = "2.4.0-rc01"
+    def navigationComponentVersion = "2.5.0-alpha01"
     implementation "androidx.navigation:navigation-runtime-ktx:$navigationComponentVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationComponentVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationComponentVersion"
@@ -122,7 +122,11 @@ dependencies {
     def transformationLayoutVersion = "1.1.1"
     implementation "com.github.skydoves:transformationlayout:$transformationLayoutVersion"
 
+    def bottomSheetVersion = "2.2.6"
+    implementation "com.maxkeppeler.sheets:core:$bottomSheetVersion"
+
     def paginationVersion = "3.1.0"
     implementation "androidx.paging:paging-runtime-ktx:$paginationVersion"
+
 
 }

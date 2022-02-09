@@ -4,9 +4,10 @@ buildscript {
         google()
         mavenCentral()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.1.0-rc01'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30'
+        classpath 'com.android.tools.build:gradle:7.1.1'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
         //google services
         def googleServices_version = "4.3.10"
         classpath "com.google.gms:google-services:$googleServices_version"

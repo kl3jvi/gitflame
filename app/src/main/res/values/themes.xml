@@ -14,6 +14,7 @@
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/regular</item>
         <item name="android:textColorHint">@color/grayTextColor</item>
+        <item name="bottomSheetDialogTheme">@style/ModalBottomSheetDialog</item>
     </style>
 
     <style name="Theme.GitFlame" parent="Base.Theme.GitFlame" />
@@ -49,6 +50,17 @@
         <item name="textAllCaps">true</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+
+    <style name="ModalBottomSheet" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <!-- Apply attributes here -->
+
+    </style>
+
+    <style name="ModalBottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheet</item>
+    </style>
+
 
 
 

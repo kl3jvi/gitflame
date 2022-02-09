@@ -1,4 +1,4 @@
-package com.kl3jvi.gitflame.data.model
+package com.kl3jvi.gitflame.data.remote.dto
 
 
 import android.content.Context
@@ -33,7 +33,7 @@ data class EventModelItem(
     @field:Json(name = "type")
     val type: EventType?
 ) {
-    fun getEventType(context: Context): String {
+    private fun getEventType(context: Context): String {
         return if (type != null) {
             context.resources.getString(type.event)
         } else {
@@ -123,7 +123,6 @@ data class Actor(
     @field:Json(name = "url")
     val url: String?
 )
-
 
 @JsonClass(generateAdapter = true)
 data class Issue(

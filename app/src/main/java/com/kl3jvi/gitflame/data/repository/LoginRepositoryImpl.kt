@@ -1,8 +1,8 @@
 package com.kl3jvi.gitflame.data.repository
 
 import com.kl3jvi.gitflame.common.network_state.Resource
-import com.kl3jvi.gitflame.data.model.AccessTokenModel
-import com.kl3jvi.gitflame.data.network.LoginService
+import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModelDto
+import com.kl3jvi.gitflame.data.remote.network.LoginService
 import com.kl3jvi.gitflame.domain.repository.LoginRepository
 import com.kl3jvi.gitflame.domain.repository.NetworkBoundRepository
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +18,16 @@ class LoginRepositoryImpl @Inject constructor(
         clientSecret: String,
         state: String,
         redirectUrl: String
-    ): Flow<Resource<AccessTokenModel>> {
-        return object : NetworkBoundRepository<AccessTokenModel>() {
-            override suspend fun fetchFromRemote(): Response<AccessTokenModel> =
-                loginService.getAccessToken(code, clientId, clientSecret, state, redirectUrl)
+    ): Flow<Resource<AccessTokenModelDto>> {
+        return object : NetworkBoundRepository<AccessTokenModelDto>() {
+            override suspend fun fetchFromRemote(): Response<AccessTokenModelDto> =
+                loginService.getAccessToken(
+                    code,
+                    clientId,
+                    clientSecret,
+                    state,
+                    redirectUrl
+                )
         }.asFlow()
     }
 }

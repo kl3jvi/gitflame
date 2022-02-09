@@ -1,9 +1,7 @@
-package com.kl3jvi.gitflame.data.network
+package com.kl3jvi.gitflame.data.remote.network
 
-import com.kl3jvi.gitflame.data.model.EventModelItem
-import com.kl3jvi.gitflame.data.model.UserModel
-import okhttp3.Protocol
-import okhttp3.Request
+import com.kl3jvi.gitflame.data.remote.dto.EventModelItem
+import com.kl3jvi.gitflame.data.remote.dto.UserModel
 import retrofit2.Response
 import retrofit2.http.*
 

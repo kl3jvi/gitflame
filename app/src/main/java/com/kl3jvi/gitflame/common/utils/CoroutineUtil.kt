@@ -1,11 +1,11 @@
 package com.kl3jvi.gitflame.common.utils
 
+
 import androidx.lifecycle.*
 import com.kl3jvi.gitflame.common.network_state.Resource
 import com.kl3jvi.gitflame.common.network_state.State
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 
@@ -23,7 +23,10 @@ fun <T> Flow<Resource<T>>.mapToState(): Flow<State<T>> = map { resource ->
     State.fromResource(resource)
 }
 
-fun <T> LifecycleOwner.collectFlow(flow: Flow<T>, collector: suspend (T) -> Unit) {
+inline fun <T> LifecycleOwner.collectFlow(
+    flow: Flow<T>,
+    crossinline collector: suspend (T) -> Unit
+) {
     lifecycleScope.launchWhenStarted {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             flow.collect {
@@ -33,7 +36,10 @@ fun <T> LifecycleOwner.collectFlow(flow: Flow<T>, collector: suspend (T) -> Unit
     }
 }
 
-fun <T> LifecycleOwner.collectLatestFlow(flow: Flow<T>, collector: suspend (T) -> Unit) {
+inline fun <T> LifecycleOwner.collectLatestFlow(
+    flow: Flow<T>,
+    crossinline collector: suspend (T) -> Unit
+) {
     lifecycleScope.launchWhenStarted {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             flow.collectLatest {
@@ -49,6 +55,14 @@ fun ViewModel.launchOnIo(coroutineScope: suspend CoroutineScope.() -> Unit): Job
     }
 }
 
-
+fun <T> observeLiveData(
+    liveData: LiveData<T>,
+    owner: LifecycleOwner,
+    observer: (T) -> Unit
+) {
+    liveData.observe(owner) {
+        observer(it)
+    }
+}
 
 

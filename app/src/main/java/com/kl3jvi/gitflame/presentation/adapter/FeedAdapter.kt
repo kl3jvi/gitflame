@@ -1,13 +1,15 @@
 package com.kl3jvi.gitflame.presentation.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.kl3jvi.gitflame.data.model.EventModelItem
+import com.kl3jvi.gitflame.data.remote.dto.EventModelItem
 import com.kl3jvi.gitflame.databinding.ItemHomeFeedBinding
+import com.kl3jvi.gitflame.presentation.ui.home.HomeFragmentDirections
 
 class FeedAdapter :
     PagingDataAdapter<EventModelItem, FeedAdapter.FeedViewHolder>(FeedDiffCallback()) {
@@ -15,6 +17,19 @@ class FeedAdapter :
     inner class FeedViewHolder constructor(
         private val binding: ItemHomeFeedBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.setClickListener { view ->
+                binding.eventItem?.let { event ->
+                    navigateToDetails(event, view)
+                }
+            }
+        }
+
+        private fun navigateToDetails(pokemon: EventModelItem, view: View) {
+            val direction =
+                HomeFragmentDirections.actionNavigationHomeToDetailsFragment()
+            view.findNavController().navigate(direction)
+        }
 
         fun bindItem(event: EventModelItem) {
             binding.apply {

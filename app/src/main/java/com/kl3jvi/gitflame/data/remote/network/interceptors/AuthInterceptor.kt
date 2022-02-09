@@ -1,4 +1,4 @@
-package com.kl3jvi.gitflame.data.network.interceptors
+package com.kl3jvi.gitflame.data.remote.network.interceptors
 
 import okhttp3.Interceptor
 import okhttp3.Response

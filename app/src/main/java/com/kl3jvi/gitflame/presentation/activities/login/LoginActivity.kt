@@ -3,12 +3,10 @@ package com.kl3jvi.gitflame.presentation.activities.login
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.R
 import com.kl3jvi.gitflame.common.network_state.State
@@ -17,13 +15,11 @@ import com.kl3jvi.gitflame.common.utils.Constants.APPLICATION_ID
 import com.kl3jvi.gitflame.common.utils.Constants.CLIENT_ID
 import com.kl3jvi.gitflame.common.utils.Constants.CLIENT_SECRET
 import com.kl3jvi.gitflame.common.utils.Constants.REDIRECT_URL
-import com.kl3jvi.gitflame.data.model.AccessTokenModel
+import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModelDto
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import com.kl3jvi.gitflame.presentation.activities.MainActivity
 import com.kl3jvi.gitflame.presentation.base.BindingActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login),
@@ -36,8 +32,6 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         super.onCreate(savedInstanceState)
         installSplashScreen()
         checkIfUserLoggedIn()
-
-
         binding {
             button.setOnClickListener {
                 customTabsIntent = CustomTabsIntent.Builder().build()
@@ -52,32 +46,15 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
      */
     private fun checkIfUserLoggedIn(): Boolean {
         var isLoggedIn = false
-        lifecycleScope.launchWhenStarted {
-            viewModel.getToken().collect { token ->
-                isLoggedIn = token.isNotEmpty()
-                if (isLoggedIn) {
-                    binding.progressBar.show()
-                    launchActivity<MainActivity> {}
-                    finish()
-                }
+        collectFlow(viewModel.getToken()) { token ->
+            isLoggedIn = token.isNotEmpty()
+            if (isLoggedIn) {
+                binding.progressBar.show()
+                launchActivity<MainActivity> {}
+                finish()
             }
         }
         return isLoggedIn
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (!checkIfUserLoggedIn()) onHandleAuthIntent(intent)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        handleNetworkChanges()
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        onHandleAuthIntent(intent)
     }
 
     override fun getAuthorizationUrl(): Uri {
@@ -99,24 +76,24 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             if (uri.toString().startsWith(BuildConfig.REDIRECT_URI)) {
                 val tokenCode = uri?.getQueryParameter("code")
                 if (!tokenCode.isNullOrEmpty()) {
-                    lifecycleScope.launch {
+                    collectFlow(
                         viewModel.getAccessToken(
                             tokenCode,
                             CLIENT_ID,
                             CLIENT_SECRET,
                             APPLICATION_ID,
                             REDIRECT_URL
-                        ).collect { state ->
-                            when (state) {
-                                is State.Error -> {
-                                    showSnack(binding.root, state.message)
-                                }
-                                is State.Loading -> {
-                                    binding.progressBar.show()
-                                }
-                                is State.Success -> {
-                                    onTokenResponse(state.data)
-                                }
+                        )
+                    ) { state ->
+                        when (state) {
+                            is State.Error -> {
+                                showSnack(binding.root, state.message)
+                            }
+                            is State.Loading -> {
+                                binding.progressBar.show()
+                            }
+                            is State.Success -> {
+                                onTokenResponse(state.data)
                             }
                         }
                     }
@@ -134,15 +111,30 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    override fun onTokenResponse(response: AccessTokenModel?) {
+    override fun onTokenResponse(response: AccessTokenModelDto?) {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {
-                Log.e("Token saved", token)
                 viewModel.saveTokenToDataStore(token)
                 return
             }
         }
         showToast("Couldn't Login!!")
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        if (!checkIfUserLoggedIn()) onHandleAuthIntent(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        handleNetworkChanges()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        onHandleAuthIntent(intent)
     }
 }

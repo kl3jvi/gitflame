@@ -1,7 +1,7 @@
 package com.kl3jvi.gitflame.domain.repository
 
 import com.kl3jvi.gitflame.common.network_state.Resource
-import com.kl3jvi.gitflame.data.model.AccessTokenModel
+import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModelDto
 import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository {
@@ -11,5 +11,5 @@ interface LoginRepository {
         clientSecret: String,
         state: String,
         redirectUrl: String
-    ): Flow<Resource<AccessTokenModel>>
+    ): Flow<Resource<AccessTokenModelDto>>
 }

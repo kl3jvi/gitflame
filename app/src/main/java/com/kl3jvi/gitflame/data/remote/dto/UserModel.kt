@@ -1,4 +1,4 @@
-package com.kl3jvi.gitflame.data.model
+package com.kl3jvi.gitflame.data.remote.dto
 
 
 import android.os.Build

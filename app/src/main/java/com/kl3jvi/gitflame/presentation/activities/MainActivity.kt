@@ -1,6 +1,8 @@
 package com.kl3jvi.gitflame.presentation.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -15,8 +17,9 @@ import com.kl3jvi.gitflame.common.utils.launchActivity
 import com.kl3jvi.gitflame.databinding.ActivityMainBinding
 import com.kl3jvi.gitflame.presentation.activities.login.LoginActivity
 import com.kl3jvi.gitflame.presentation.activities.login.LoginViewModel
+import com.kl3jvi.gitflame.presentation.ui.bottomsheet.SearchBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -64,4 +67,25 @@ class MainActivity : AppCompatActivity() {
         }
         return isLoggedIn
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_search -> {
+            val searchModal = SearchBottomSheet()
+            searchModal.show(supportFragmentManager, SearchBottomSheet.TAG)
+            true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
+    }
+
 }

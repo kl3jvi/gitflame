@@ -1,7 +1,7 @@
 package com.kl3jvi.gitflame.di
 
-import com.kl3jvi.gitflame.data.network.LoginService
-import com.kl3jvi.gitflame.data.network.UserService
+import com.kl3jvi.gitflame.data.remote.network.LoginService
+import com.kl3jvi.gitflame.data.remote.network.UserService
 import com.kl3jvi.gitflame.data.repository.LoginRepositoryImpl
 import com.kl3jvi.gitflame.data.repository.UserRepositoryImpl
 import com.kl3jvi.gitflame.domain.repository.LoginRepository

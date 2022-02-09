@@ -30,3 +30,4 @@ enum class EventType(val event: Int, val icon: Int) {
     OrganizationEvent(R.string.organization_event, R.drawable.ic_profile),
     ProjectEvent(R.string.project_event, R.drawable.ic_info_outline);
 }
+

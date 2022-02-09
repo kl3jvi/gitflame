@@ -19,19 +19,24 @@
         <entry key="app/src/main/res/drawable/ic_pull_requests.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/drawable/ic_push.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/drawable/ic_repo.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.206" />
         <entry key="app/src/main/res/drawable/ic_star_filled.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_trash.xml" value="0.17592592592592593" />
         <entry key="app/src/main/res/drawable/scrollbar.xml" value="0.2609375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.24479166666666666" />
         <entry key="app/src/main/res/layout/activity_login_fragment.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/details_fragment.xml" value="0.16354166666666667" />
         <entry key="app/src/main/res/layout/fragment_explore.xml" value="0.12395833333333334" />
         <entry key="app/src/main/res/layout/fragment_gists.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.12395833333333334" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.2949438202247191" />
         <entry key="app/src/main/res/layout/item_home_feed.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/layout/search_bottom_sheet.xml" value="0.1705282669138091" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.24479166666666666" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.24270833333333333" />
+        <entry key="app/src/main/res/menu/settings_menu.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2609375" />
       </map>
     </option>

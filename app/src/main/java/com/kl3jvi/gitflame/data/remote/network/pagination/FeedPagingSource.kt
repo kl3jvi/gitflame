@@ -1,10 +1,10 @@
-package com.kl3jvi.gitflame.data.network.pagination
+package com.kl3jvi.gitflame.data.remote.network.pagination
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.kl3jvi.gitflame.common.utils.Constants.STARTING_PAGE_INDEX
-import com.kl3jvi.gitflame.data.model.EventModelItem
-import com.kl3jvi.gitflame.data.network.UserService
+import com.kl3jvi.gitflame.data.remote.dto.EventModelItem
+import com.kl3jvi.gitflame.data.remote.network.UserService
 
 class FeedPagingSource(
     private val userService: UserService,

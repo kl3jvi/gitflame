@@ -1,7 +1,7 @@
-package com.kl3jvi.gitflame.data.network
+package com.kl3jvi.gitflame.data.remote.network
 
-import com.kl3jvi.gitflame.data.model.AccessTokenModel
-import com.kl3jvi.gitflame.data.model.UserModel
+import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModelDto
+import com.kl3jvi.gitflame.data.remote.dto.UserModel
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -22,5 +22,5 @@ interface LoginService {
         @Field("client_secret") clientSecret: String,
         @Field("state") state: String,
         @Field("redirect_uri") redirectUrl: String
-    ): Response<AccessTokenModel>
+    ): Response<AccessTokenModelDto>
 }
