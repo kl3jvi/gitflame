@@ -1,7 +1,7 @@
 package com.kl3jvi.gitflame.domain.use_case.get_access_token
 
 import com.kl3jvi.gitflame.common.network_state.Resource
-import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModelDto
+import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModel
 import com.kl3jvi.gitflame.domain.repository.LoginRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ class GetAccessTokenUseCase @Inject constructor(
         clientSecret: String,
         state: String,
         redirectUrl: String
-    ): Flow<Resource<AccessTokenModelDto>> {
+    ): Flow<Resource<AccessTokenModel>> {
         return repository.getAccessToken(
             code,
             clientId,

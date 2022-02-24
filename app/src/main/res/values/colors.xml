@@ -13,4 +13,5 @@
     <color name="grayTextColor">#9ba0a4</color>
     <color name="primaryGrayBackground">#2B2C30</color>
     <color name="primaryBlackBackground">#111111</color>
+    <color name="splashColorBg">#4185EC</color>
 </resources>

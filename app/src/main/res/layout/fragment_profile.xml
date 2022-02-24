@@ -7,7 +7,7 @@
 
         <variable
             name="userData"
-            type="com.kl3jvi.gitflame.data.model.UserModel" />
+            type="com.kl3jvi.gitflame.data.remote.dto.UserModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

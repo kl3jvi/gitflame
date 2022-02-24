@@ -15,7 +15,7 @@ import com.kl3jvi.gitflame.common.utils.Constants.APPLICATION_ID
 import com.kl3jvi.gitflame.common.utils.Constants.CLIENT_ID
 import com.kl3jvi.gitflame.common.utils.Constants.CLIENT_SECRET
 import com.kl3jvi.gitflame.common.utils.Constants.REDIRECT_URL
-import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModelDto
+import com.kl3jvi.gitflame.data.remote.dto.AccessTokenModel
 import com.kl3jvi.gitflame.databinding.ActivityLoginBinding
 import com.kl3jvi.gitflame.presentation.activities.MainActivity
 import com.kl3jvi.gitflame.presentation.base.BindingActivity
@@ -30,7 +30,6 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
         checkIfUserLoggedIn()
         binding {
             button.setOnClickListener {
@@ -111,7 +110,7 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
         }
     }
 
-    override fun onTokenResponse(response: AccessTokenModelDto?) {
+    override fun onTokenResponse(response: AccessTokenModel?) {
         if (response != null) {
             val token: String? = response.token ?: response.accessToken
             if (!token.isNullOrEmpty()) {

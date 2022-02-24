@@ -12,7 +12,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
-@OptIn(ExperimentalCoroutinesApi::class)
+
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val getAccessTokenUseCase: GetAccessTokenUseCase,
