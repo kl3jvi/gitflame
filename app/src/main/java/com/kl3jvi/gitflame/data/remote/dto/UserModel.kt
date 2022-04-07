@@ -2,12 +2,15 @@ package com.kl3jvi.gitflame.data.remote.dto
 
 
 import android.os.Build
+import android.os.Parcelable
 import android.text.Html
 import android.text.Spanned
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class UserModel(
     @field:Json(name = "avatar_url")
@@ -74,7 +77,7 @@ data class UserModel(
     val updatedAt: String?,
     @field:Json(name = "url")
     val url: String?
-) {
+) : Parcelable {
     fun getFormattedHtml(): Spanned? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(bio, FROM_HTML_MODE_LEGACY)

@@ -13,7 +13,8 @@
             android:layout_height="wrap_content"
             tools:context=".presentation.ui.home.HomeFragment">
 
-            <androidx.recyclerview.widget.RecyclerView
+
+            <com.airbnb.epoxy.EpoxyRecyclerView
                 android:id="@+id/feedList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
                 android:scrollbars="vertical"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

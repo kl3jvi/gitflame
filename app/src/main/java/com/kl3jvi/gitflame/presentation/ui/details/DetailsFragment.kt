@@ -1,22 +1,23 @@
 package com.kl3jvi.gitflame.presentation.ui.details
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.kl3jvi.gitflame.R
+import com.kl3jvi.gitflame.databinding.DetailsFragmentBinding
+import com.kl3jvi.gitflame.presentation.activities.MainActivity
+import com.kl3jvi.gitflame.presentation.base.BindingFragment
 
-class DetailsFragment : Fragment() {
+
+class DetailsFragment : BindingFragment<DetailsFragmentBinding>(R.layout.details_fragment) {
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.details_fragment, container, false)
+    override fun onResume() {
+        super.onResume()
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.hideBottomNavBar()
+        }
     }
 
+    override fun observeViewModel() {}
 
+    override fun initViews() {}
 
 }

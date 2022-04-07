@@ -5,7 +5,6 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -13,7 +12,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kl3jvi.gitflame.R
+import com.kl3jvi.gitflame.common.utils.hide
 import com.kl3jvi.gitflame.common.utils.launchActivity
+import com.kl3jvi.gitflame.common.utils.show
 import com.kl3jvi.gitflame.databinding.ActivityMainBinding
 import com.kl3jvi.gitflame.presentation.activities.login.LoginActivity
 import com.kl3jvi.gitflame.presentation.activities.login.LoginViewModel
@@ -24,7 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     private val viewModel: LoginViewModel by viewModels()
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,15 +57,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkIfUserLoggedIn(): Boolean {
-        var isLoggedIn = false
-        lifecycleScope.launchWhenStarted {
-            viewModel.getToken().collect { token ->
-                isLoggedIn = token.isNotEmpty()
-                if (!isLoggedIn) {
-                    launchActivity<LoginActivity> {}
-                    finish()
-                }
-            }
+        val isLoggedIn = !viewModel.getToken().isNullOrEmpty()
+        if (!isLoggedIn) {
+            launchActivity<LoginActivity> {}
+            finish()
         }
         return isLoggedIn
     }
@@ -84,4 +80,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun hideBottomNavBar() {
+        binding.navView.animate().translationY(binding.navView.height.toFloat()).duration = 500
+        binding.navView.hide()
+    }
+
+    fun showBottomNavBar() {
+        binding.navView.animate().translationY(0f).duration = 500
+        binding.navView.show()
+    }
 }

@@ -1,9 +1,8 @@
 package com.kl3jvi.gitflame.di
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
+import android.content.SharedPreferences
+import com.kl3jvi.gitflame.common.utils.Constants.SHARED_PREFERENCES_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,12 +14,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DataStoreServiceModule {
-    private val Context.tokenDataStore: DataStore<Preferences> by preferencesDataStore(name = "token")
 
     @Singleton
     @Provides
-    fun provideUserPreferencesDataStore(
-        @ApplicationContext app: Context
-    ): DataStore<Preferences> = app.tokenDataStore
+    fun provideSharedPreference(@ApplicationContext context: Context): SharedPreferences {
+        return context.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+    }
 
 }

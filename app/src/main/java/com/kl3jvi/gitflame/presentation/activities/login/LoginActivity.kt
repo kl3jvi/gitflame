@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.kl3jvi.gitflame.BuildConfig
 import com.kl3jvi.gitflame.R
 import com.kl3jvi.gitflame.common.network_state.State
@@ -44,14 +43,11 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
      * when reopening app and not transitioning 2 times to home page after login
      */
     private fun checkIfUserLoggedIn(): Boolean {
-        var isLoggedIn = false
-        collectFlow(viewModel.getToken()) { token ->
-            isLoggedIn = token.isNotEmpty()
-            if (isLoggedIn) {
-                binding.progressBar.show()
-                launchActivity<MainActivity> {}
-                finish()
-            }
+        val isLoggedIn = !viewModel.getToken().isNullOrEmpty()
+        if (isLoggedIn) {
+            binding.progressBar.show()
+            launchActivity<MainActivity> {}
+            finish()
         }
         return isLoggedIn
     }

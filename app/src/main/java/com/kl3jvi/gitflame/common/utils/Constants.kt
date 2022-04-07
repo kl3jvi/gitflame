@@ -10,7 +10,10 @@ object Constants {
     const val REDIRECT_URL = BuildConfig.REDIRECT_URI
     const val APPLICATION_ID = BuildConfig.APPLICATION_ID
     const val STARTING_PAGE_INDEX = 1
+    const val SHARED_PREFERENCES_NAME = "gitFlame.preferences"
+
+
     fun emptyString() = ""
     fun getSafeString(string: String?) = string.toString()
-    const val AUTHENTICATION_TOKEN = "authToken"
+
 }

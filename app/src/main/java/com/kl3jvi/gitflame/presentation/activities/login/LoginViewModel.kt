@@ -2,14 +2,14 @@ package com.kl3jvi.gitflame.presentation.activities.login
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.kl3jvi.gitflame.common.network_state.Resource
 import com.kl3jvi.gitflame.common.utils.launchOnIo
 import com.kl3jvi.gitflame.common.utils.mapToState
-import com.kl3jvi.gitflame.data.persistence.DataStoreManager
+import com.kl3jvi.gitflame.data.persistence.LocalStorage
 import com.kl3jvi.gitflame.domain.use_case.get_access_token.GetAccessTokenUseCase
 import com.kl3jvi.gitflame.domain.use_case.get_user.GetUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 
@@ -17,7 +17,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val getAccessTokenUseCase: GetAccessTokenUseCase,
     private val getUserUseCase: GetUserUseCase,
-    private val dataStoreManager: DataStoreManager,
+    private val localStorage: LocalStorage
 ) : ViewModel() {
 
     fun getAccessToken(
@@ -34,13 +34,25 @@ class LoginViewModel @Inject constructor(
         redirectUrl
     ).mapToState()
 
-    fun saveTokenToDataStore(token: String) = launchOnIo {
-        dataStoreManager.saveTokenToPreferencesStore(token)
+    fun saveTokenToDataStore(token: String) {
+        localStorage.authToken = token
     }
 
-    fun getToken() = dataStoreManager.getTokenFromPreferencesStore()
+    fun getToken() = localStorage.authToken
 
-    fun getUser() = getToken().flatMapLatest {
-        getUserUseCase(accessToken = it).mapToState()
+    init {
+        getUser()
     }
+
+    private fun getUser() {
+        viewModelScope.launchOnIo {
+            getUserUseCase(accessToken = localStorage.authToken ?: "").collect {
+                when (it) {
+                    is Resource.Failed -> Log.e("Error getting username", it.message)
+                    is Resource.Success -> localStorage.userName = it.data.login
+                }
+            }
+        }
+    }
+
 }

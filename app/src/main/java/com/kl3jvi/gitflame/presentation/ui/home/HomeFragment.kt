@@ -1,16 +1,16 @@
 package com.kl3jvi.gitflame.presentation.ui.home
 
-import android.util.Log
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.kl3jvi.gitflame.R
-import com.kl3jvi.gitflame.common.network_state.State
-import com.kl3jvi.gitflame.common.utils.*
-import com.kl3jvi.gitflame.common.utils.Constants.getSafeString
+import com.kl3jvi.gitflame.common.utils.NetworkUtil
+import com.kl3jvi.gitflame.common.utils.collectFlow
+import com.kl3jvi.gitflame.common.utils.observeLiveData
+import com.kl3jvi.gitflame.common.utils.showToast
 import com.kl3jvi.gitflame.databinding.FragmentHomeBinding
+import com.kl3jvi.gitflame.presentation.activities.MainActivity
 import com.kl3jvi.gitflame.presentation.activities.login.LoginViewModel
-import com.kl3jvi.gitflame.presentation.adapter.FeedAdapter
+import com.kl3jvi.gitflame.presentation.adapter.FeedController
 import com.kl3jvi.gitflame.presentation.base.BindingFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,9 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val homeViewModel: HomeViewModel by viewModels()
-    private val loginViewModel: LoginViewModel by activityViewModels()
-    private lateinit var adapter: FeedAdapter
-    private lateinit var username: String
+    private val controller = FeedController()
 
     override fun onStart() {
         super.onStart()
@@ -29,40 +27,28 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     override fun observeViewModel() = getUser()
 
-    private fun getUser() {
-        collectFlow(loginViewModel.getUser()) { state ->
-            when (state) {
-                is State.Error -> {
-                    showLoading(false)
-                    Log.e("Error",state.message)
-                    showToast(state.message)
-                }
-                is State.Loading -> showLoading(true)
-                is State.Success -> {
-                    username = getSafeString(state.data.login)
-                    if (!username.isNullOrEmpty()) {
-                        getUserFeed(username)
-                        binding.swipeRefreshLayout.setOnRefreshListener { getUserFeed(username) }
-                        showLoading(false)
-                    }
-                }
-            }
+    override fun onResume() {
+        super.onResume()
+        if (requireActivity() is MainActivity) {
+            (activity as MainActivity?)?.showBottomNavBar()
         }
     }
 
-    private fun getUserFeed(username: String) {
-        collectLatestFlow(homeViewModel.getUserFeed(username)) {
-            adapter.submitData(it)
-            showLoading(false)
+    private fun getUser() {
+        getUserFeed()
+        binding.swipeRefreshLayout.setOnRefreshListener { getUserFeed() }
+        showLoading(false)
+    }
+
+
+    private fun getUserFeed() {
+        collectFlow(homeViewModel.usersFeed) {
+            controller.submitData(it)
         }
     }
 
     override fun initViews() {
-        adapter = FeedAdapter()
-        binding {
-            feedList.layoutManager = LinearLayoutManager(requireContext())
-            feedList.adapter = adapter
-        }
+        binding.feedList.setController(controller)
     }
 
     private fun showLoading(isLoading: Boolean) {
@@ -70,10 +56,12 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
     }
 
     private fun handleNetworkChanges() {
-        observeLiveData(NetworkUtil.getNetworkLiveData(requireActivity()), this) { isConnected ->
+        observeLiveData(
+            NetworkUtil.getNetworkLiveData(requireActivity()),
+            viewLifecycleOwner
+        ) { isConnected ->
             if (!isConnected) showToast("No Internet Connection!")
-            else if (adapter.itemCount == 0 && ::username.isInitialized) getUserFeed(username)
+//            else if (adapter.spanCount == 0 && ::username.isInitialized) getUserFeed(username)
         }
     }
-
 }

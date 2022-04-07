@@ -36,6 +36,18 @@ inline fun <T> LifecycleOwner.collectFlow(
     }
 }
 
+
+inline fun <T> ViewModel.mapAndCollect(
+    flow: Flow<Resource<T>>,
+    crossinline collector: suspend (State<T>) -> Unit
+) {
+    viewModelScope.launchOnIo {
+        flow.map { State.fromResource(it) }.collect {
+            collector(it)
+        }
+    }
+}
+
 inline fun <T> LifecycleOwner.collectLatestFlow(
     flow: Flow<T>,
     crossinline collector: suspend (T) -> Unit

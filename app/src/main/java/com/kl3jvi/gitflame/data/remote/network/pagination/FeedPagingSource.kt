@@ -20,7 +20,8 @@ class FeedPagingSource(
         val page = params.key ?: STARTING_PAGE_INDEX
         return try {
             val eventResponse = userService.getReceivedEvents(username, page)
-            LoadResult.Page(
+
+                LoadResult.Page(
                 data = eventResponse,
                 prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
                 nextKey = if (eventResponse.isNullOrEmpty()) null else page + 1
